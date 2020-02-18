@@ -1,5 +1,9 @@
 package de.paul2708.framestats.table;
 
+import de.paul2708.framestats.internal.TableView;
+
+import java.util.List;
+
 /**
  * This interface represents the functional table.
  * One table refers to every player.
@@ -34,4 +38,19 @@ public interface Table {
      * @param name name to search for
      */
     void search(String name);
+
+    /**
+     * Get an unmodifiable list of the current displayed rows.
+     *
+     * @return unmodifiable list of rows
+     */
+    List<TableRow> getRows();
+
+    /**
+     * Internal method.
+     * Map a table view to this table.
+     *
+     * @param view table view
+     */
+    void addView(TableView view);
 }
