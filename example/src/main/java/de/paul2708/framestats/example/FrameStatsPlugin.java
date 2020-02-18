@@ -1,8 +1,21 @@
 package de.paul2708.framestats.example;
 
+import de.paul2708.framestats.configuration.TableConfiguration;
+import de.paul2708.framestats.exception.InvalidConfigurationException;
+import de.paul2708.framestats.table.Table;
+import de.paul2708.framestats.table.TableRow;
+import de.paul2708.framestats.table.TableSearcher;
+import de.paul2708.framestats.table.TableUpdater;
+import de.paul2708.framestats.table.impl.DefaultTable;
+import org.apache.commons.lang.math.IntRange;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import sun.tools.jconsole.Tab;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This {@link JavaPlugin} represents the main plugin.
@@ -31,7 +44,30 @@ public class FrameStatsPlugin extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        try {
+            TableConfiguration configuration = TableConfiguration.load("table.yml");
+            Table table = Table.create(configuration);
 
+            table.setUpdater(() -> Arrays.asList(
+                    new TableRow("1", "Paul2708", "100", "15"),
+                    new TableRow("2", "Tommy", "50", "30"),
+                    new TableRow("3", "Lisa", "10", "2"),
+                    new TableRow("4", "Steve", "0", "0")
+            ));
+            table.setSearcher(name -> {
+                if (name.contains("Paul")) {
+                    return Collections.singletonList(new TableRow("1", "Paul2708", "100", "15"));
+                } else {
+                    return Collections.emptyList();
+                }
+            });
+
+            table.register();
+
+            table.update();
+        } catch (InvalidConfigurationException e) {
+            System.err.println("Invalid configuration: " + e.getMessage());
+        }
     }
 
     /**
