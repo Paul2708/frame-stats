@@ -4,18 +4,12 @@ import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.exception.InvalidConfigurationException;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
-import de.paul2708.framestats.table.TableSearcher;
-import de.paul2708.framestats.table.TableUpdater;
-import de.paul2708.framestats.table.impl.DefaultTable;
-import org.apache.commons.lang.math.IntRange;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import sun.tools.jconsole.Tab;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * This {@link JavaPlugin} represents the main plugin.
