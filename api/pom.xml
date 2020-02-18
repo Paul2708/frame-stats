@@ -10,4 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>frame-stats-api</artifactId>
+
+    <dependencies>
+        <!-- NotNull and Nullable annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>19.0.0</version>
+        </dependency>
+    </dependencies>
 </project>
