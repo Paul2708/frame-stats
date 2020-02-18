@@ -16,5 +16,5 @@ public interface TableSearcher {
      * @param name search object (typed in by user)
      * @return matching results
      */
-    List<TableSearcher> search(String name);
+    List<TableRow> search(String name);
 }
