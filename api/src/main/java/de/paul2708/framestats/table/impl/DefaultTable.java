@@ -81,4 +81,9 @@ public final class DefaultTable implements Table {
     public void addView(TableView view) {
         // TODO: Implement me
     }
+
+    @Override
+    public void register() {
+        // TODO: Implement me
+    }
 }

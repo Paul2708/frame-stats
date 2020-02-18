@@ -1,5 +1,6 @@
 package de.paul2708.framestats.table;
 
+import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableView;
 
 import java.util.List;
@@ -53,4 +54,19 @@ public interface Table {
      * @param view table view
      */
     void addView(TableView view);
+
+    void register();
+
+    /**
+     * Create a new table instance by configuration.
+     * After configuring it use {@link #register()}.
+     *
+     * @see TableConfiguration#load(String)
+     * @param configuration already valid and loaded configuration
+     * @return created table
+     */
+    static Table create(TableConfiguration configuration) {
+        // TODO: Implement me
+        return null;
+    }
 }
