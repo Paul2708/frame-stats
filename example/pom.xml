@@ -11,6 +11,15 @@
 
     <artifactId>frame-stats-example</artifactId>
 
+    <dependencies>
+        <!-- Frame-Stats-API -->
+        <dependency>
+            <groupId>de.paul2708</groupId>
+            <artifactId>frame-stats-api</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <!-- Assembly -->
