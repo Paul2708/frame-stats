@@ -56,6 +56,11 @@ public interface Table {
      */
     void addView(TableView view);
 
+    /**
+     * Register the table.
+     * The item frames will be searched.
+     * Several internal listener will be registered (only once!).
+     */
     void register();
 
     /**

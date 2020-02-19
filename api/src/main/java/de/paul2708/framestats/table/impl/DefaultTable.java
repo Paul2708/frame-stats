@@ -2,11 +2,17 @@ package de.paul2708.framestats.table.impl;
 
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableView;
+import de.paul2708.framestats.internal.frame.FramePlacer;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
 import de.paul2708.framestats.table.TableUpdater;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +37,8 @@ public final class DefaultTable implements Table {
      */
     public DefaultTable(TableConfiguration configuration) {
         this.configuration = configuration;
+
+        this.views = new HashSet<>();
     }
 
     /**
@@ -101,8 +109,21 @@ public final class DefaultTable implements Table {
         views.add(view);
     }
 
+    /**
+     * Register the table.
+     * The item frames will be searched.
+     * Several internal listener will be registered (only once!).
+     */
     @Override
     public void register() {
-        // TODO: Implement me
+        FramePlacer placer = new FramePlacer();
+        Block[][] wall = placer.construct(configuration.getLeftLowerCorner(), configuration.getRightUpperCorner());
+        ItemFrame[][] frames = placer.search(wall);
+
+        for (ItemFrame[] frame : frames) {
+            for (ItemFrame itemFrame : frame) {
+                itemFrame.setItem(new ItemStack(Material.APPLE));
+            }
+        }
     }
 }
