@@ -1,5 +1,6 @@
 package de.paul2708.framestats.table.impl;
 
+import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
@@ -15,8 +16,19 @@ import java.util.List;
  */
 public final class DefaultTable implements Table {
 
+    private final TableConfiguration configuration;
+
     private TableUpdater updater;
     private TableSearcher searcher;
+
+    /**
+     * Create a new default table.
+     *
+     * @param configuration configuration
+     */
+    public DefaultTable(TableConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     /**
      * Set the updater routine.

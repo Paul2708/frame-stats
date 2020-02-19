@@ -2,6 +2,7 @@ package de.paul2708.framestats.table;
 
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableView;
+import de.paul2708.framestats.table.impl.DefaultTable;
 
 import java.util.List;
 
@@ -66,7 +67,6 @@ public interface Table {
      * @return created table
      */
     static Table create(TableConfiguration configuration) {
-        // TODO: Implement me
-        return null;
+        return new DefaultTable(configuration);
     }
 }
