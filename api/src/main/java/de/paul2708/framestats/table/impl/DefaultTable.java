@@ -8,6 +8,7 @@ import de.paul2708.framestats.table.TableSearcher;
 import de.paul2708.framestats.table.TableUpdater;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is the default implementation of {@link Table}.
@@ -20,6 +21,8 @@ public final class DefaultTable implements Table {
 
     private TableUpdater updater;
     private TableSearcher searcher;
+
+    private Set<TableView> views;
 
     /**
      * Create a new default table.
@@ -47,7 +50,9 @@ public final class DefaultTable implements Table {
     public void update() {
         List<TableRow> rows = updater.update();
 
-        // TODO: Update screen
+        for (TableView view : views) {
+            // TODO: Update screen
+        }
     }
 
     /**
@@ -69,7 +74,9 @@ public final class DefaultTable implements Table {
     public void search(String name) {
         List<TableRow> rows = searcher.search(name);
 
-        // TODO: Update screen
+        for (TableView view : views) {
+            // TODO: Update screen
+        }
     }
 
     /**
@@ -91,7 +98,7 @@ public final class DefaultTable implements Table {
      */
     @Override
     public void addView(TableView view) {
-        // TODO: Implement me
+        views.add(view);
     }
 
     @Override
