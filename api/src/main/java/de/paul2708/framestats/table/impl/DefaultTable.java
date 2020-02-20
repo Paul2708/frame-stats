@@ -1,16 +1,16 @@
 package de.paul2708.framestats.table.impl;
 
 import de.paul2708.framestats.configuration.TableConfiguration;
+import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.internal.frame.FramePlacer;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
 import de.paul2708.framestats.table.TableUpdater;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.map.MapView;
 
 import java.util.HashSet;
 import java.util.List;
@@ -59,7 +59,7 @@ public final class DefaultTable implements Table {
         List<TableRow> rows = updater.update();
 
         for (TableView view : views) {
-            view.update();
+            view.draw();
         }
     }
 
@@ -83,7 +83,7 @@ public final class DefaultTable implements Table {
         List<TableRow> rows = searcher.search(name);
 
         for (TableView view : views) {
-            view.update();
+            view.draw();
         }
     }
 
@@ -119,11 +119,8 @@ public final class DefaultTable implements Table {
         FramePlacer placer = new FramePlacer();
         Block[][] wall = placer.construct(configuration.getLeftLowerCorner(), configuration.getRightUpperCorner());
         ItemFrame[][] frames = placer.search(wall);
+        MapView[][] fill = placer.fill(frames);
 
-        for (ItemFrame[] frame : frames) {
-            for (ItemFrame itemFrame : frame) {
-                itemFrame.setItem(new ItemStack(Material.APPLE));
-            }
-        }
+        TableRegistration.getInstance().registerTable(this, fill);
     }
 }
