@@ -1,9 +1,15 @@
 package de.paul2708.framestats.internal.frame;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.map.MapView;
 
 import java.util.Optional;
 
@@ -14,9 +20,37 @@ import java.util.Optional;
  */
 public final class FramePlacer {
 
+    // TODO: Remove parameter and move into fields
+
     private static final short START_ID = 1000;
 
-    // TODO: Format comment
+    private static short counter = FramePlacer.START_ID;
+
+    // TODO: Add javadoc
+    public MapView[][] fill(ItemFrame[][] frames) {
+        MapView[][] mapViews = new MapView[frames.length][frames[0].length];
+        World world = frames[0][0].getWorld();
+
+        for (int i = 0; i < frames.length; i++) {
+            for (int j = 0; j < frames[0].length; j++) {
+                mapViews[i][j] = Bukkit.getMap(FramePlacer.counter) == null ? Bukkit.createMap(world)
+                        : Bukkit.getMap(FramePlacer.counter);
+
+                // TODO: Move item creation outside loop
+                ItemStack itemStack = new ItemStack(Material.MAP, 1);
+                itemStack.setDurability(mapViews[i][j].getId());
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                itemMeta.setDisplayName("[" + i + "|" + j + "]");
+                itemStack.setItemMeta(itemMeta);
+
+                frames[i][j].setItem(itemStack);
+
+                FramePlacer.counter++;
+            }
+        }
+
+        return mapViews;
+    }
 
     /**
      * Search for frames.
