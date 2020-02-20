@@ -4,10 +4,13 @@ import de.paul2708.framestats.exception.InvalidConfigurationException;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,6 +24,13 @@ public final class TableConfiguration {
     private static final String PATH = "./plugins/Frame-Stats/";
 
     private final FileConfiguration configuration;
+
+    /*
+      Register the column configuration once.
+     */
+    static {
+        ConfigurationSerialization.registerClass(ColumnConfiguration.class);
+    }
 
     /**
      * Load the yaml configuration.
@@ -50,8 +60,22 @@ public final class TableConfiguration {
     }
 
     /**
+     * Get a sorted (by column index) list of all column configurations.
+     *
+     * @return sorted list of column configurations
+     */
+    public List<ColumnConfiguration> getColumnConfigurations() {
+        List<ColumnConfiguration> list = (List<ColumnConfiguration>) configuration.getList("columns");
+
+        Collections.sort(list);
+
+        return list;
+    }
+
+    /**
      * Load a table configuration from file.
      *
+     * @see ColumnConfiguration#verify()
      * @param path relative path from <code>./plugins/Frame-Stats</code> to <code>.yml</code> file
      * @return loaded table configuration
      * @throws InvalidConfigurationException if the configuration was invalid,
@@ -67,6 +91,11 @@ public final class TableConfiguration {
 
         Objects.requireNonNull(configuration.getLeftLowerCorner(), "Left lower corner must be set");
         Objects.requireNonNull(configuration.getRightUpperCorner(), "Right upper corner must be set");
+        Objects.requireNonNull(configuration.getColumnConfigurations(), "Columns list must be set");
+
+        for (ColumnConfiguration columnConfiguration : configuration.getColumnConfigurations()) {
+            columnConfiguration.verify();
+        }
 
         return configuration;
     }
