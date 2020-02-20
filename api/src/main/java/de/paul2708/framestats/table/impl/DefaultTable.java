@@ -59,7 +59,7 @@ public final class DefaultTable implements Table {
         List<TableRow> rows = updater.update();
 
         for (TableView view : views) {
-            // TODO: Update screen
+            view.update();
         }
     }
 
@@ -83,7 +83,7 @@ public final class DefaultTable implements Table {
         List<TableRow> rows = searcher.search(name);
 
         for (TableView view : views) {
-            // TODO: Update screen
+            view.update();
         }
     }
 

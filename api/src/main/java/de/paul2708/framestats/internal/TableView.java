@@ -17,4 +17,8 @@ public final class TableView {
         this.table = table;
         this.player = player;
     }
+
+    public void update() {
+        // TODO: Implement me
+    }
 }
