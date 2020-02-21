@@ -1,13 +1,10 @@
 package de.paul2708.framestats.internal;
 
-import de.paul2708.framestats.internal.frame.FramePlacer;
 import de.paul2708.framestats.internal.image.ImageSplitter;
+import de.paul2708.framestats.internal.image.PositionCalculator;
+import de.paul2708.framestats.internal.image.layer.TableLayer;
 import de.paul2708.framestats.table.Table;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
@@ -17,7 +14,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,6 +39,9 @@ public final class TableView {
     public void setup() {
         try {
             image = ImageIO.read(new File("./plugins/Download.png"));
+            PositionCalculator calculator = new PositionCalculator(table.getConfiguration());
+            calculator.calculate();
+            image = new TableLayer(calculator).apply(image);
         } catch (IOException e) {
             e.printStackTrace();
         }
