@@ -8,7 +8,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
 
 import java.util.Optional;
@@ -39,9 +38,6 @@ public final class FramePlacer {
                 // TODO: Move item creation outside loop
                 ItemStack itemStack = new ItemStack(Material.MAP, 1);
                 itemStack.setDurability(mapViews[i][j].getId());
-                ItemMeta itemMeta = itemStack.getItemMeta();
-                itemMeta.setDisplayName("[" + i + "|" + j + "]");
-                itemStack.setItemMeta(itemMeta);
 
                 frames[i][j].setItem(itemStack);
 
@@ -93,6 +89,7 @@ public final class FramePlacer {
      */
     public Block[][] construct(Location leftCorner, Location rightCorner) {
         // TODO: Refactor, duplicated code
+        // TODO: Get width and height by config
         if (leftCorner.getBlockX() == rightCorner.getBlockX()) {
             int widthBlocks = 1 + Math.abs(leftCorner.getBlockZ() - rightCorner.getBlockZ());
             int heightBlocks = 1 + Math.abs(leftCorner.getBlockY() - rightCorner.getBlockY());
