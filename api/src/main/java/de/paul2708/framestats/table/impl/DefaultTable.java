@@ -123,4 +123,14 @@ public final class DefaultTable implements Table {
 
         TableRegistration.getInstance().registerTable(this, fill);
     }
+
+    /**
+     * Get the table configuration.
+     *
+     * @return configuration
+     */
+    @Override
+    public TableConfiguration getConfiguration() {
+        return configuration;
+    }
 }

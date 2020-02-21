@@ -64,6 +64,13 @@ public interface Table {
     void register();
 
     /**
+     * Get the table configuration.
+     *
+     * @return configuration
+     */
+    TableConfiguration getConfiguration();
+
+    /**
      * Create a new table instance by configuration.
      * After configuring it use {@link #register()}.
      *
