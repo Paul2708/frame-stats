@@ -1,7 +1,9 @@
 package de.paul2708.framestats.internal;
 
+import de.paul2708.framestats.internal.image.ImagePipeline;
 import de.paul2708.framestats.internal.image.ImageSplitter;
 import de.paul2708.framestats.internal.image.PositionCalculator;
+import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
@@ -24,6 +26,8 @@ import java.util.List;
  */
 public final class TableView {
 
+    // TODO: False commit
+
     private final Table table;
     private final Player player;
     private final MapView[][] view;
@@ -37,14 +41,7 @@ public final class TableView {
     }
 
     public void setup() {
-        try {
-            image = ImageIO.read(new File("./plugins/Download.png"));
-            PositionCalculator calculator = new PositionCalculator(table.getConfiguration());
-            calculator.calculate();
-            image = new TableLayer(calculator).apply(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image = new ImagePipeline(table).run();
     }
 
     public void draw() {
