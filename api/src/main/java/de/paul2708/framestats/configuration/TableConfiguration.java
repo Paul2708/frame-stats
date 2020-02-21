@@ -91,6 +91,31 @@ public final class TableConfiguration {
     }
 
     /**
+     * Get the table width in blocks.
+     *
+     * @return width in blocks
+     */
+    public int getWidth() {
+        Location leftLoc = getLeftLowerCorner();
+        Location rightLoc = getRightUpperCorner();
+
+        if (leftLoc.getBlockX() == rightLoc.getBlockX()) {
+            return 1 + Math.abs(leftLoc.getBlockZ() - rightLoc.getBlockZ());
+        } else {
+            return 1 + Math.abs(leftLoc.getBlockX() - rightLoc.getBlockX());
+        }
+    }
+
+    /**
+     * Get the table height in blocks.
+     *
+     * @return height in blocks
+     */
+    public int getHeight() {
+        return 1 + Math.abs(getLeftLowerCorner().getBlockY() - getRightUpperCorner().getBlockY());
+    }
+
+    /**
      * Load a table configuration from file.
      *
      * @see ColumnConfiguration#verify()

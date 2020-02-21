@@ -3,6 +3,7 @@ package de.paul2708.framestats.internal.image;
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
+import de.paul2708.framestats.internal.image.layer.CroppingLayer;
 import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
@@ -56,6 +57,7 @@ public final class ImagePipeline {
 
         // Init pipeline
         List<ImageLayer> layers = new LinkedList<>();
+        layers.add(new CroppingLayer(configuration.getWidth(), configuration.getHeight()));
         layers.add(new BackgroundLayer());
         layers.add(new TableLayer(calculator));
         layers.add(new HeadingLayer(calculator, configuration.getColumnConfigurations()

@@ -14,6 +14,8 @@ import java.awt.Image;
  */
 public final class TableRenderer extends MapRenderer {
 
+    // TODO: False commit
+
     private final Player player;
     private final Image image;
 
