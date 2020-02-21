@@ -73,6 +73,15 @@ public final class TableConfiguration {
     }
 
     /**
+     * Get the amount of rows that are getting displayed.
+     *
+     * @return row count
+     */
+    public int getRows() {
+        return configuration.getInt("rows");
+    }
+
+    /**
      * Get the height of a row in pixels.
      *
      * @return height in pixel
@@ -108,6 +117,9 @@ public final class TableConfiguration {
 
         if (configuration.getRowHeight() <= 0) {
             throw new InvalidConfigurationException("Row height must be greater then zero");
+        }
+        if (configuration.getRows() <= 0) {
+            throw new InvalidConfigurationException("Rows must be greater then zero");
         }
 
         return configuration;
