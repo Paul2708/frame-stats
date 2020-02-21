@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
  */
 public class CroppingLayer implements ImageLayer {
 
+    private static final int BLOCK_SIZE = 128;
+
     private final int width;
     private final int height;
 
@@ -19,8 +21,8 @@ public class CroppingLayer implements ImageLayer {
      * @param height wall height
      */
     public CroppingLayer(int width, int height) {
-        this.width = width;
-        this.height = height;
+        this.width = width * CroppingLayer.BLOCK_SIZE;
+        this.height = height * CroppingLayer.BLOCK_SIZE;
     }
 
     /**
