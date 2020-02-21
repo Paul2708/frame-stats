@@ -1,8 +1,8 @@
 package de.paul2708.framestats.example;
 
+import de.paul2708.framestats.TablePluginHook;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.exception.InvalidConfigurationException;
-import de.paul2708.framestats.internal.listener.PlayerJoinListener;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import org.bukkit.Bukkit;
@@ -39,7 +39,7 @@ public class FrameStatsPlugin extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        registerListener(new PlayerJoinListener());
+        TablePluginHook.initialize(this);
 
         try {
             TableConfiguration configuration = TableConfiguration.load("table.yml");

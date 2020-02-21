@@ -13,8 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public final class PlayerJoinListener implements Listener {
 
-    // TODO: Register listener in api
-
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
