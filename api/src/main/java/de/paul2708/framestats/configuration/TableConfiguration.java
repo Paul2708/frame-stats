@@ -73,6 +73,15 @@ public final class TableConfiguration {
     }
 
     /**
+     * Get the height of a row in pixels.
+     *
+     * @return height in pixel
+     */
+    public int getRowHeight() {
+        return configuration.getInt("sizes.row-height");
+    }
+
+    /**
      * Load a table configuration from file.
      *
      * @see ColumnConfiguration#verify()
@@ -95,6 +104,10 @@ public final class TableConfiguration {
 
         for (ColumnConfiguration columnConfiguration : configuration.getColumnConfigurations()) {
             columnConfiguration.verify();
+        }
+
+        if (configuration.getRowHeight() <= 0) {
+            throw new InvalidConfigurationException("Row height must be greater then zero");
         }
 
         return configuration;
