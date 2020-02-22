@@ -29,6 +29,8 @@ public interface Table {
      */
     void search(String name);
 
+    void fill(List<TableRow> rows);
+
     /**
      * Get an unmodifiable list of the current displayed rows.
      *

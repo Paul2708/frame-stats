@@ -33,7 +33,7 @@ public final class DefaultTable implements Table {
 
     private Set<TableView> views;
 
-    private final List<TableRow> rows;
+    private List<TableRow> rows;
 
     /**
      * Create a new default table.
@@ -44,8 +44,6 @@ public final class DefaultTable implements Table {
         this.configuration = configuration;
 
         this.views = new HashSet<>();
-
-        this.rows = new ArrayList<>();
     }
 
     /**
@@ -72,6 +70,11 @@ public final class DefaultTable implements Table {
         for (TableView view : views) {
             view.draw();
         }
+    }
+
+    @Override
+    public void fill(List<TableRow> rows) {
+        this.rows = rows.stream().limit(configuration.getRows() - 1).collect(Collectors.toList());
     }
 
     /**

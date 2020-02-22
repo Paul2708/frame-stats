@@ -68,6 +68,11 @@ public class FrameStatsPlugin extends JavaPlugin {
                         .collect(Collectors.toList())
         );
 
+        table.fill(database.stream()
+                .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                        stats.getDeaths(), stats.getPoints()))
+                .collect(Collectors.toList()));
+
         table.register();
 
         // Register test commands to trigger update/search
