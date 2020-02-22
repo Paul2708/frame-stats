@@ -27,6 +27,15 @@ public final class TableRow {
     }
 
     /**
+     * Get the row entries.
+     *
+     * @return row entries
+     */
+    public String[] getEntries() {
+        return entries;
+    }
+
+    /**
      * Two table rows are equal, if every row entry are equal.
      *
      * @param o object to check
