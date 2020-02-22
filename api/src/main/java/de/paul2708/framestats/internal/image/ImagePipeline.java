@@ -3,6 +3,7 @@ package de.paul2708.framestats.internal.image;
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
+import de.paul2708.framestats.internal.image.layer.ContentLayer;
 import de.paul2708.framestats.internal.image.layer.CroppingLayer;
 import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
@@ -65,6 +66,7 @@ public final class ImagePipeline {
                 .map(ColumnConfiguration::getName)
                 .collect(Collectors.toList()))
         );
+        layers.add(new ContentLayer(calculator, table.getRows()));
 
         // Run pipeline
         BufferedImage inputResult = image;
