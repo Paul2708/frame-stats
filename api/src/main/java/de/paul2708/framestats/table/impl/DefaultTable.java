@@ -12,9 +12,11 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.map.MapView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This class is the default implementation of {@link Table}.
@@ -30,6 +32,8 @@ public final class DefaultTable implements Table {
 
     private Set<TableView> views;
 
+    private final List<TableRow> rows;
+
     /**
      * Create a new default table.
      *
@@ -39,6 +43,8 @@ public final class DefaultTable implements Table {
         this.configuration = configuration;
 
         this.views = new HashSet<>();
+
+        this.rows = new ArrayList<>();
     }
 
     /**
@@ -56,7 +62,8 @@ public final class DefaultTable implements Table {
      */
     @Override
     public void update() {
-        List<TableRow> rows = updater.update();
+        this.rows.clear();
+        this.rows.addAll(updater.update().stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
 
         for (TableView view : views) {
             view.draw();
@@ -80,7 +87,9 @@ public final class DefaultTable implements Table {
      */
     @Override
     public void search(String name) {
-        List<TableRow> rows = searcher.search(name);
+        this.rows.clear();
+        this.rows.addAll(searcher.search(name).stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
+
 
         for (TableView view : views) {
             view.draw();
@@ -95,7 +104,7 @@ public final class DefaultTable implements Table {
     @Override
     public List<TableRow> getRows() {
         // TODO: Implement me
-        return null;
+        return rows;
     }
 
     /**
