@@ -11,11 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * This {@link JavaPlugin} represents the main plugin.
@@ -31,6 +28,8 @@ public class FrameStatsPlugin extends JavaPlugin {
 
     private static FrameStatsPlugin instance;
 
+    private List<PlayerStatistics> database;
+
     /**
      * Called, if the plugin is loaded.
      */
@@ -45,7 +44,64 @@ public class FrameStatsPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Simulate player stats database
-        List<PlayerStatistics> database = new ArrayList<>();
+        this.database = new ArrayList<>();
+        refreshDatabase();
+
+        // Api usage
+        TablePluginHook.initialize(this);
+
+        TableConfiguration configuration = null;
+
+        try {
+            configuration = TableConfiguration.load("table.yml");
+        } catch (InvalidConfigurationException e) {
+            System.err.println("Invalid configuration: " + e.getMessage());
+        }
+
+        Table table = Table.create(configuration);
+
+        table.setUpdater(() ->
+                database.stream()
+                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                                stats.getDeaths(), stats.getPoints()))
+                        .collect(Collectors.toList())
+        );
+
+        table.setSearcher(name ->
+                database.stream()
+                        .filter(stats -> stats.getName().contains(name))
+                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                                stats.getDeaths(), stats.getPoints()))
+                        .collect(Collectors.toList())
+        );
+
+        table.register();
+
+        table.update();
+
+        // Register test commands to trigger update/search
+        getCommand("update").setExecutor((sender, command, label, args) -> {
+            refreshDatabase();
+            sender.sendMessage("Table got updated.");
+            return true;
+        });
+        getCommand("search").setExecutor((sender, command, label, args) -> {
+            table.search(args[0]);
+            sender.sendMessage("Search for " + args[0]);
+            return true;
+        });
+    }
+
+    /**
+     * Called, if the plugin was disabled.
+     */
+    @Override
+    public void onDisable() {
+
+    }
+
+    private void refreshDatabase() {
+        this.database.clear();
 
         for (int i = 0; i < 500; i++) {
             database.add(PlayerStatistics.create());
@@ -55,43 +111,6 @@ public class FrameStatsPlugin extends JavaPlugin {
         for (int i = 0; i < database.size(); i++) {
             database.get(i).setRank(i + 1);
         }
-
-        // Api usage
-        TablePluginHook.initialize(this);
-
-        try {
-            TableConfiguration configuration = TableConfiguration.load("table.yml");
-            Table table = Table.create(configuration);
-
-            table.setUpdater(() ->
-                database.stream()
-                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
-                            stats.getDeaths(), stats.getPoints()))
-                        .collect(Collectors.toList())
-            );
-
-            table.setSearcher(name ->
-                database.stream()
-                        .filter(stats -> stats.getName().contains(name))
-                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
-                                stats.getDeaths(), stats.getPoints()))
-                        .collect(Collectors.toList())
-            );
-
-            table.register();
-
-            table.update();
-        } catch (InvalidConfigurationException e) {
-            System.err.println("Invalid configuration: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Called, if the plugin was disabled.
-     */
-    @Override
-    public void onDisable() {
-
     }
 
     /**
