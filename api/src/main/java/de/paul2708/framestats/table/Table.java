@@ -16,18 +16,6 @@ import java.util.List;
 public interface Table {
 
     /**
-     * Set the updater routine.
-     *
-     * @param updater updater
-     */
-    void setUpdater(TableUpdater updater);
-
-    /**
-     * Update the table by refreshing the row entries with {@link #setUpdater(TableUpdater)}.
-     */
-    void update();
-
-    /**
      * Set the search routine.
      *
      * @param searcher searcher

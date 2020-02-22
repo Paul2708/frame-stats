@@ -60,13 +60,6 @@ public class FrameStatsPlugin extends JavaPlugin {
 
         Table table = Table.create(configuration);
 
-        table.setUpdater(() ->
-                database.stream()
-                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
-                                stats.getDeaths(), stats.getPoints()))
-                        .collect(Collectors.toList())
-        );
-
         table.setSearcher(name ->
                 database.stream()
                         .filter(stats -> stats.getName().contains(name))
@@ -76,8 +69,6 @@ public class FrameStatsPlugin extends JavaPlugin {
         );
 
         table.register();
-
-        table.update();
 
         // Register test commands to trigger update/search
         getCommand("update").setExecutor((sender, command, label, args) -> {

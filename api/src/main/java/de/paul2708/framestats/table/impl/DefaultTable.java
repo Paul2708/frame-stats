@@ -8,7 +8,6 @@ import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
-import de.paul2708.framestats.table.TableUpdater;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.map.MapRenderer;
@@ -30,7 +29,6 @@ public final class DefaultTable implements Table {
 
     private final TableConfiguration configuration;
 
-    private TableUpdater updater;
     private TableSearcher searcher;
 
     private Set<TableView> views;
@@ -48,29 +46,6 @@ public final class DefaultTable implements Table {
         this.views = new HashSet<>();
 
         this.rows = new ArrayList<>();
-    }
-
-    /**
-     * Set the updater routine.
-     *
-     * @param updater updater
-     */
-    @Override
-    public void setUpdater(TableUpdater updater) {
-        this.updater = updater;
-    }
-
-    /**
-     * Update the table by refreshing the row entries with {@link #setUpdater(TableUpdater)}.
-     */
-    @Override
-    public void update() {
-        this.rows.clear();
-        this.rows.addAll(updater.update().stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
-
-        for (TableView view : views) {
-            view.draw();
-        }
     }
 
     /**
