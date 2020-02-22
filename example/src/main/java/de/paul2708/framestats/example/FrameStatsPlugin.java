@@ -9,8 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * This {@link JavaPlugin} represents the main plugin.
@@ -39,25 +44,39 @@ public class FrameStatsPlugin extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        // Simulate player stats database
+        List<PlayerStatistics> database = new ArrayList<>();
+
+        for (int i = 0; i < 500; i++) {
+            database.add(PlayerStatistics.create());
+        }
+
+        Collections.sort(database);
+        for (int i = 0; i < database.size(); i++) {
+            database.get(i).setRank(i + 1);
+        }
+
+        // Api usage
         TablePluginHook.initialize(this);
 
         try {
             TableConfiguration configuration = TableConfiguration.load("table.yml");
             Table table = Table.create(configuration);
 
-            table.setUpdater(() -> Arrays.asList(
-                    new TableRow("1", "Paul2708", "100", "15"),
-                    new TableRow("2", "Tommy", "50", "30"),
-                    new TableRow("3", "Lisa", "10", "2"),
-                    new TableRow("4", "Steve", "0", "0")
-            ));
-            table.setSearcher(name -> {
-                if (name.contains("Paul")) {
-                    return Collections.singletonList(new TableRow("1", "Paul2708", "100", "15"));
-                } else {
-                    return Collections.emptyList();
-                }
-            });
+            table.setUpdater(() ->
+                database.stream()
+                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                            stats.getDeaths(), stats.getPoints()))
+                        .collect(Collectors.toList())
+            );
+
+            table.setSearcher(name ->
+                database.stream()
+                        .filter(stats -> stats.getName().contains(name))
+                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                                stats.getDeaths(), stats.getPoints()))
+                        .collect(Collectors.toList())
+            );
 
             table.register();
 
