@@ -27,6 +27,19 @@ public final class TableRow {
     }
 
     /**
+     * Create a new immutable table row.
+     * Note that the class will not check the amount of columns.
+     * Every object will call {@link #toString()}, so make sure that the method is implemented.
+     *
+     * @param entries row entries, be sure to use the correct amount of objects
+     */
+    public TableRow(Object... entries) {
+        Objects.requireNonNull(entries);
+
+        this.entries = Arrays.stream(entries).map(Object::toString).toArray(String[]::new);
+    }
+
+    /**
      * Get the row entries.
      *
      * @return row entries
