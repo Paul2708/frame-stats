@@ -4,16 +4,19 @@ import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.internal.frame.FramePlacer;
+import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
 import de.paul2708.framestats.table.TableUpdater;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -130,7 +133,24 @@ public final class DefaultTable implements Table {
         ItemFrame[][] frames = placer.search(wall);
         MapView[][] fill = placer.fill(frames);
 
-        TableRegistration.getInstance().registerTable(this, fill);
+        TableRenderer[][] renderers = new TableRenderer[fill.length][fill[0].length];
+
+        for (int i = 0; i < fill.length; i++) {
+            for (int j = 0; j < fill[i].length; j++) {
+                MapView view = fill[i][j];
+
+                List<MapRenderer> list = new LinkedList<>(view.getRenderers());
+
+                for (MapRenderer renderer : list) {
+                    view.removeRenderer(renderer);
+                }
+
+                renderers[i][j] = new TableRenderer();
+                view.addRenderer(renderers[i][j]);
+            }
+        }
+
+        TableRegistration.getInstance().registerTable(this, renderers);
     }
 
     /**

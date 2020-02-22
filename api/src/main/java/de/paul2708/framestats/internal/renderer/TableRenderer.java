@@ -1,33 +1,29 @@
 package de.paul2708.framestats.internal.renderer;
 
+import javafx.application.Platform;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
+import org.bukkit.map.MinecraftFont;
 
 import java.awt.Image;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Class description.
+ * This map renderer renders an image once and only re-renders if a new image was set.
  *
  * @author Paul2708
  */
 public final class TableRenderer extends MapRenderer {
 
-    // TODO: False commit
+    private final Map<Player, Image> images;
 
-    private final Player player;
-    private final Image image;
-
-    private boolean update;
-
-    public TableRenderer(Player player, Image image) {
+    public TableRenderer() {
         super(true);
 
-        this.player = player;
-        this.image = image;
-
-        this.update = true;
+        this.images = new HashMap<>();
     }
 
     /**
@@ -39,14 +35,15 @@ public final class TableRenderer extends MapRenderer {
      */
     @Override
     public void render(MapView map, MapCanvas canvas, Player player) {
-        if (update) {
-            // canvas.drawImage(0, 0, ima);
-
-            this.update = false;
-        }
+        images.forEach((playerKey, image) -> {
+            if (player.equals(playerKey)) {
+                canvas.drawImage(0, 0, image);
+                canvas.drawText(10, 10, new MinecraftFont(), player.getName());
+            }
+        });
     }
 
-    public void update() {
-        this.update = true;
+    public void render(Player player, Image image) {
+        images.put(player, image);
     }
 }

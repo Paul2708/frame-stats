@@ -1,5 +1,6 @@
 package de.paul2708.framestats.internal;
 
+import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapView;
@@ -16,7 +17,7 @@ public final class TableRegistration {
 
     private static TableRegistration instance;
 
-    private final Map<Table, MapView[][]> tables;
+    private final Map<Table, TableRenderer[][]> tables;
     // private final Map<UUID, List<TableView>> views;
 
     private TableRegistration() {
@@ -28,13 +29,12 @@ public final class TableRegistration {
             TableView view = new TableView(table, maps, player);
 
             table.addView(view);
-            view.setup();
             view.draw();
         });
     }
 
-    public void registerTable(Table table, MapView[][] views) {
-        tables.put(table, views);
+    public void registerTable(Table table, TableRenderer[][] renderers) {
+        tables.put(table, renderers);
     }
 
     public static TableRegistration getInstance() {
