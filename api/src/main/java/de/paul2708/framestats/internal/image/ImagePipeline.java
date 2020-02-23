@@ -54,7 +54,7 @@ public final class ImagePipeline {
         // TODO: Replace with config one
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File("./plugins/Download.jpg"));
+            image = ImageIO.read(new File(configuration.getBackgroundPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }

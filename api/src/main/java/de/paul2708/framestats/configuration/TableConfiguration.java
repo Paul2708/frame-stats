@@ -115,8 +115,19 @@ public final class TableConfiguration {
         return 1 + Math.abs(getLeftLowerCorner().getBlockY() - getRightUpperCorner().getBlockY());
     }
 
+    // TODO: Use constant for path
+
     /**
-     * Load a table configuration from file.
+     * Get the relative (to plugins/Frame-Stats/) background image path.
+     *
+     * @return relative path
+     */
+    public String getBackgroundPath() {
+        return "plugins/Frame-Stats/" + configuration.getString("background-image");
+    }
+
+    /**
+     * Load a table configuration from file and verify its correctness.
      *
      * @see ColumnConfiguration#verify()
      * @param path relative path from <code>./plugins/Frame-Stats</code> to <code>.yml</code> file
@@ -135,6 +146,7 @@ public final class TableConfiguration {
         Objects.requireNonNull(configuration.getLeftLowerCorner(), "Left lower corner must be set");
         Objects.requireNonNull(configuration.getRightUpperCorner(), "Right upper corner must be set");
         Objects.requireNonNull(configuration.getColumnConfigurations(), "Columns list must be set");
+        Objects.requireNonNull(configuration.getBackgroundPath(), "Background image path must be set");
 
         for (ColumnConfiguration columnConfiguration : configuration.getColumnConfigurations()) {
             columnConfiguration.verify();
@@ -145,6 +157,9 @@ public final class TableConfiguration {
         }
         if (configuration.getRows() <= 0) {
             throw new InvalidConfigurationException("Rows must be greater then zero");
+        }
+        if (Files.notExists(Paths.get(configuration.getBackgroundPath()))) {
+            throw new InvalidConfigurationException("Couldn't find background image");
         }
 
         return configuration;
