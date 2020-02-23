@@ -1,11 +1,9 @@
 package de.paul2708.framestats.internal.renderer;
 
-import javafx.application.Platform;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
-import org.bukkit.map.MinecraftFont;
 
 import java.awt.Image;
 import java.util.HashMap;
@@ -38,7 +36,6 @@ public final class TableRenderer extends MapRenderer {
         images.forEach((playerKey, image) -> {
             if (player.equals(playerKey)) {
                 canvas.drawImage(0, 0, image);
-                canvas.drawText(10, 10, new MinecraftFont(), player.getName());
             }
         });
     }

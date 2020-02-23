@@ -27,7 +27,7 @@ public final class TableView {
     }
 
     public void draw() {
-        BufferedImage image = new ImagePipeline(table).run();
+        BufferedImage image = new ImagePipeline(table, player).run();
         ImageSplitter splitter = new ImageSplitter();
         Image[][] images = splitter.splitImage(image);
 

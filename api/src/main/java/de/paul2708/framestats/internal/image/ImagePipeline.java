@@ -9,6 +9,7 @@ import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
 import de.paul2708.framestats.table.Table;
+import org.bukkit.entity.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -26,14 +27,16 @@ import java.util.stream.Collectors;
 public final class ImagePipeline {
 
     private final Table table;
+    private final Player player;
 
     /**
      * Create a new image pipeline.
      *
      * @param table referring table
      */
-    public ImagePipeline(Table table) {
+    public ImagePipeline(Table table, Player player) {
         this.table = table;
+        this.player = player;
     }
 
     /**
@@ -51,7 +54,7 @@ public final class ImagePipeline {
         // TODO: Replace with config one
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File("./plugins/Download.png"));
+            image = ImageIO.read(new File("./plugins/Download.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,7 +69,7 @@ public final class ImagePipeline {
                 .map(ColumnConfiguration::getName)
                 .collect(Collectors.toList()))
         );
-        layers.add(new ContentLayer(calculator, table.getRows()));
+        layers.add(new ContentLayer(calculator, table.getRows(player)));
 
         // Run pipeline
         BufferedImage inputResult = image;
