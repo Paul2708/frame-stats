@@ -3,6 +3,7 @@ package de.paul2708.framestats.table;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.table.impl.DefaultTable;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface Table {
      *
      * @param name name to search for
      */
-    void search(String name);
+    void search(Player player, String name);
 
     void fill(List<TableRow> rows);
 
@@ -36,7 +37,7 @@ public interface Table {
      *
      * @return unmodifiable list of rows
      */
-    List<TableRow> getRows();
+    List<TableRow> getRows(Player player);
 
     /**
      * Internal method.

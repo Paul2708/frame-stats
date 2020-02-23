@@ -6,6 +6,7 @@ import de.paul2708.framestats.exception.InvalidConfigurationException;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -60,7 +61,7 @@ public class FrameStatsPlugin extends JavaPlugin {
 
         Table table = Table.create(configuration);
 
-        table.setSearcher(name ->
+        table.setSearcher((player, name) ->
                 database.stream()
                         .filter(stats -> stats.getName().contains(name))
                         .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
@@ -82,7 +83,7 @@ public class FrameStatsPlugin extends JavaPlugin {
             return true;
         });
         getCommand("search").setExecutor((sender, command, label, args) -> {
-            table.search(args[0]);
+            table.search((Player) sender, args[0]);
             sender.sendMessage("Search for " + args[0]);
             return true;
         });

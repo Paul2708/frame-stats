@@ -10,13 +10,16 @@ import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,8 +35,8 @@ public final class DefaultTable implements Table {
     private TableSearcher searcher;
 
     private Set<TableView> views;
-
-    private List<TableRow> rows;
+    private List<TableRow> defaultRows;
+    private Map<Player, List<TableRow>> playerRows;
 
     /**
      * Create a new default table.
@@ -44,6 +47,7 @@ public final class DefaultTable implements Table {
         this.configuration = configuration;
 
         this.views = new HashSet<>();
+        this.playerRows = new HashMap<>();
     }
 
     /**
@@ -62,10 +66,9 @@ public final class DefaultTable implements Table {
      * @param name name to search for
      */
     @Override
-    public void search(String name) {
-        this.rows.clear();
-        this.rows.addAll(searcher.search(name).stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
-
+    public void search(Player player, String name) {
+        this.playerRows.put(player,
+                searcher.search(player, name).stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
 
         for (TableView view : views) {
             view.draw();
@@ -74,7 +77,7 @@ public final class DefaultTable implements Table {
 
     @Override
     public void fill(List<TableRow> rows) {
-        this.rows = rows.stream().limit(configuration.getRows() - 1).collect(Collectors.toList());
+        this.defaultRows = rows.stream().limit(configuration.getRows() - 1).collect(Collectors.toList());
     }
 
     /**
@@ -83,9 +86,9 @@ public final class DefaultTable implements Table {
      * @return unmodifiable list of rows
      */
     @Override
-    public List<TableRow> getRows() {
+    public List<TableRow> getRows(Player player) {
         // TODO: Implement me
-        return rows;
+        return playerRows.getOrDefault(player, defaultRows);
     }
 
     /**
