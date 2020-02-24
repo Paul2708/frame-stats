@@ -126,7 +126,7 @@ public final class DefaultTable implements Table {
                     view.removeRenderer(renderer);
                 }
 
-                renderers[i][j] = new TableRenderer();
+                renderers[i][j] = new TableRenderer(frames[i][j]);
                 view.addRenderer(renderers[i][j]);
             }
         }

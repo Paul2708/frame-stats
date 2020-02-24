@@ -1,5 +1,6 @@
 package de.paul2708.framestats.internal.renderer;
 
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
@@ -16,10 +17,13 @@ import java.util.Map;
  */
 public final class TableRenderer extends MapRenderer {
 
+    private final ItemFrame frame;
     private final Map<Player, Image> images;
 
-    public TableRenderer() {
+    public TableRenderer(ItemFrame frame) {
         super(true);
+
+        this.frame = frame;
 
         this.images = new HashMap<>();
     }
@@ -42,5 +46,14 @@ public final class TableRenderer extends MapRenderer {
 
     public void render(Player player, Image image) {
         images.put(player, image);
+    }
+
+    /**
+     * Get the item frame that holds the map of the map with this renderer.
+     *
+     * @return item frame
+     */
+    public ItemFrame getFrame() {
+        return frame;
     }
 }
