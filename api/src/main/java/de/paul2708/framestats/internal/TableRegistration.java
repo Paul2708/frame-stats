@@ -2,11 +2,13 @@ package de.paul2708.framestats.internal;
 
 import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.table.Table;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Class description.
@@ -36,6 +38,23 @@ public final class TableRegistration {
     public void registerTable(Table table, TableRenderer[][] renderers) {
         tables.put(table, renderers);
     }
+
+    public Optional<Table> findByFrame(ItemFrame frame) {
+        for (Map.Entry<Table, TableRenderer[][]> entry : tables.entrySet()) {
+            TableRenderer[][] rendererArray = entry.getValue();
+
+            for (TableRenderer[] tableRenderers : rendererArray) {
+                for (TableRenderer tableRenderer : tableRenderers) {
+                    if (tableRenderer.getFrame().equals(frame)) {
+                        return Optional.ofNullable(entry.getKey());
+                    }
+                }
+            }
+        }
+
+        return Optional.empty();
+    }
+
 
     public static TableRegistration getInstance() {
         if (TableRegistration.instance == null) {
