@@ -2,6 +2,7 @@ package de.paul2708.framestats.configuration;
 
 import de.paul2708.framestats.exception.InvalidConfigurationException;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  *
  * @author Paul2708
  */
+@SerializableAs("Column")
 public final class ColumnConfiguration implements Comparable<ColumnConfiguration>, ConfigurationSerializable {
 
     private final int index;
