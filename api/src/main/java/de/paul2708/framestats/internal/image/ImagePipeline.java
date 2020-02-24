@@ -2,12 +2,14 @@ package de.paul2708.framestats.internal.image;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
+import de.paul2708.framestats.internal.image.calculator.ButtonCalculator;
 import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
 import de.paul2708.framestats.internal.image.layer.ContentLayer;
 import de.paul2708.framestats.internal.image.layer.CroppingLayer;
 import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
+import de.paul2708.framestats.internal.image.layer.SearchButtonLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
@@ -51,6 +53,9 @@ public final class ImagePipeline {
         PositionCalculator calculator = new PositionCalculator(configuration);
         calculator.calculate();
 
+        ButtonCalculator buttonCalculator = new ButtonCalculator(configuration);
+        buttonCalculator.calculate();
+
         // Load image
         // TODO: Replace with config one
         BufferedImage image = null;
@@ -71,6 +76,7 @@ public final class ImagePipeline {
                 .collect(Collectors.toList()))
         );
         layers.add(new ContentLayer(calculator, table.getRows(player)));
+        layers.add(new SearchButtonLayer(buttonCalculator));
 
         // Run pipeline
         BufferedImage inputResult = image;

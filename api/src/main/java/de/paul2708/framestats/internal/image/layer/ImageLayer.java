@@ -41,6 +41,9 @@ public interface ImageLayer {
         return new BufferedImage(colorModel, raster, isAlphaPremultiplied, null);
     }
 
+    // TODO: Add color to method
+    // TODO: Change filLRect to fill(Shape)
+
     /**
      * Draw text in the center of the rectangle.
      *
