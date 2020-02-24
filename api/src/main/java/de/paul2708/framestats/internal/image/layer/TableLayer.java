@@ -1,6 +1,6 @@
 package de.paul2708.framestats.internal.image.layer;
 
-import de.paul2708.framestats.internal.image.PositionCalculator;
+import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

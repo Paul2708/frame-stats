@@ -1,4 +1,4 @@
-package de.paul2708.framestats.internal.image;
+package de.paul2708.framestats.internal.image.calculator;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;

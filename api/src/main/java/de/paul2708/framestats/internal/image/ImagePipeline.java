@@ -2,6 +2,7 @@ package de.paul2708.framestats.internal.image;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
+import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
 import de.paul2708.framestats.internal.image.layer.ContentLayer;
 import de.paul2708.framestats.internal.image.layer.CroppingLayer;
