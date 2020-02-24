@@ -30,7 +30,7 @@ public class ButtonCalculator {
 
     public void calculate() {
         this.button = new Rectangle(configuration.getWidth() * 128 - WIDTH - X_PADDING,
-                Y_PADDING + HEIGHT, WIDTH, HEIGHT);
+                Y_PADDING, WIDTH, HEIGHT);
     }
 
     public Rectangle result() {
