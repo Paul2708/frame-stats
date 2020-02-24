@@ -3,6 +3,7 @@ package de.paul2708.framestats.internal.frame;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Rotation;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -49,7 +50,7 @@ public final class FramePlacer {
     }
 
     /**
-     * Search for frames.
+     * Search for frames and prepare them.
      *
      * @param blocks searched array of blocks
      * @return array of item frames
@@ -64,6 +65,9 @@ public final class FramePlacer {
 
                 if (searched.isPresent()) {
                     frames[i][j] = searched.get();
+
+                    // Prepare frames
+                    frames[i][j].setRotation(Rotation.NONE);
                 } else {
                     throw new IllegalArgumentException("block " + blocks[i][j].getLocation() + " has no item frame");
                 }
