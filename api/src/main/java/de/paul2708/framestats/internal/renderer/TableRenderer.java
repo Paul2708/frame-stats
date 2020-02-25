@@ -19,6 +19,7 @@ public final class TableRenderer extends MapRenderer {
 
     private final ItemFrame frame;
     private final Map<Player, Image> images;
+    private final Map<Player, Boolean> updates;
 
     public TableRenderer(ItemFrame frame) {
         super(true);
@@ -26,6 +27,7 @@ public final class TableRenderer extends MapRenderer {
         this.frame = frame;
 
         this.images = new HashMap<>();
+        this.updates = new HashMap<>();
     }
 
     /**
@@ -38,14 +40,16 @@ public final class TableRenderer extends MapRenderer {
     @Override
     public void render(MapView map, MapCanvas canvas, Player player) {
         images.forEach((playerKey, image) -> {
-            if (player.equals(playerKey)) {
+            if (player.equals(playerKey) && updates.getOrDefault(playerKey, false)) {
                 canvas.drawImage(0, 0, image);
+                updates.put(playerKey, false);
             }
         });
     }
 
     public void render(Player player, Image image) {
         images.put(player, image);
+        updates.put(player, true);
     }
 
     /**
