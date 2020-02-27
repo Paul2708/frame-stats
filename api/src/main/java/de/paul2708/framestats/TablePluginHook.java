@@ -5,6 +5,7 @@ import de.paul2708.framestats.internal.listener.PlayerInteractAtEntityListener;
 import de.paul2708.framestats.internal.listener.PlayerInteractEntityListener;
 import de.paul2708.framestats.internal.listener.PlayerJoinListener;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -29,11 +30,22 @@ public final class TablePluginHook {
      * @param plugin plugin that uses the api
      */
     public static void initialize(JavaPlugin plugin) {
-        // TODO: Add registerListener method
+        // Register listener
+        registerListener(plugin,
+                new PlayerJoinListener(),
+                new PlayerInteractEntityListener(),
+                new PlayerInteractAtEntityListener(),
+                new MapClickListener());
+    }
 
-        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);
-        Bukkit.getPluginManager().registerEvents(new PlayerInteractEntityListener(), plugin);
-        Bukkit.getPluginManager().registerEvents(new PlayerInteractAtEntityListener(), plugin);
-        Bukkit.getPluginManager().registerEvents(new MapClickListener(), plugin);
+    /**
+     * Register some listener.
+     *
+     * @param listener listener
+     */
+    private static void registerListener(JavaPlugin plugin, Listener... listener) {
+        for (Listener single : listener) {
+            Bukkit.getPluginManager().registerEvents(single, plugin);
+        }
     }
 }
