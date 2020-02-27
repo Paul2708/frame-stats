@@ -30,6 +30,7 @@ public final class TableConfiguration {
      */
     static {
         ConfigurationSerialization.registerClass(ColumnConfiguration.class);
+        ConfigurationSerialization.registerClass(SearchButtonConfiguration.class);
     }
 
     /**
@@ -91,6 +92,15 @@ public final class TableConfiguration {
     }
 
     /**
+     * Get the search button configuration.
+     *
+     * @return search button configuration
+     */
+    public SearchButtonConfiguration getSearchButtonConfiguration() {
+        return (SearchButtonConfiguration) configuration.get("search-button");
+    }
+
+    /**
      * Get the table width in blocks.
      *
      * @return width in blocks
@@ -147,6 +157,7 @@ public final class TableConfiguration {
         Objects.requireNonNull(configuration.getRightUpperCorner(), "Right upper corner must be set");
         Objects.requireNonNull(configuration.getColumnConfigurations(), "Columns list must be set");
         Objects.requireNonNull(configuration.getBackgroundPath(), "Background image path must be set");
+        Objects.requireNonNull(configuration.getSearchButtonConfiguration(), "Search button must be set");
 
         for (ColumnConfiguration columnConfiguration : configuration.getColumnConfigurations()) {
             columnConfiguration.verify();
@@ -161,6 +172,8 @@ public final class TableConfiguration {
         if (Files.notExists(Paths.get(configuration.getBackgroundPath()))) {
             throw new InvalidConfigurationException("Couldn't find background image");
         }
+
+        configuration.getSearchButtonConfiguration().verify();
 
         return configuration;
     }
