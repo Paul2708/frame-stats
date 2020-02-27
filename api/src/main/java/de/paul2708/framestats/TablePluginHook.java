@@ -1,5 +1,6 @@
 package de.paul2708.framestats;
 
+import de.paul2708.framestats.internal.listener.PlayerInteractAtEntityListener;
 import de.paul2708.framestats.internal.listener.PlayerInteractEntityListener;
 import de.paul2708.framestats.internal.listener.PlayerJoinListener;
 import org.bukkit.Bukkit;
@@ -31,5 +32,6 @@ public final class TablePluginHook {
 
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractEntityListener(), plugin);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractAtEntityListener(), plugin);
     }
 }
