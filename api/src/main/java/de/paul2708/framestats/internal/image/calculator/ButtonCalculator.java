@@ -1,5 +1,6 @@
 package de.paul2708.framestats.internal.image.calculator;
 
+import de.paul2708.framestats.configuration.SearchButtonConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
 
 import java.awt.Rectangle;
@@ -11,14 +12,7 @@ import java.awt.Rectangle;
  */
 public class ButtonCalculator {
 
-    private static final int X_PADDING = 10;
-    private static final int Y_PADDING = 10;
-
-    private static final int WIDTH = 160;
-    private static final int HEIGHT = 20;
-
     // TODO: Use common Calculator interface
-    // TODO: Use configuration for padding
 
     private final TableConfiguration configuration;
 
@@ -29,8 +23,10 @@ public class ButtonCalculator {
     }
 
     public void calculate() {
-        this.button = new Rectangle(configuration.getWidth() * 128 - WIDTH - X_PADDING,
-                Y_PADDING, WIDTH, HEIGHT);
+        SearchButtonConfiguration position = configuration.getSearchButtonConfiguration();
+
+        this.button = new Rectangle(configuration.getWidth() * 128 - position.getWidth() - position.getXPadding(),
+                position.getYPadding(), position.getWidth(), position.getHeight());
     }
 
     public Rectangle result() {
