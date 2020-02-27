@@ -6,7 +6,6 @@ import de.paul2708.framestats.exception.InvalidConfigurationException;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -75,18 +74,6 @@ public class FrameStatsPlugin extends JavaPlugin {
                 .collect(Collectors.toList()));
 
         table.register();
-
-        // Register test commands to trigger update/search
-        getCommand("update").setExecutor((sender, command, label, args) -> {
-            refreshDatabase();
-            sender.sendMessage("Table got updated.");
-            return true;
-        });
-        getCommand("search").setExecutor((sender, command, label, args) -> {
-            table.search((Player) sender, args[0]);
-            sender.sendMessage("Search for " + args[0]);
-            return true;
-        });
     }
 
     /**
