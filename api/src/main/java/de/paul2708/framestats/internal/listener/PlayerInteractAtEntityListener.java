@@ -60,6 +60,8 @@ public final class PlayerInteractAtEntityListener implements Listener {
         }
     }
 
+    // TODO: Move location stuff into utility (or at least common) place
+
     /**
      * Check if the item frame is located along the z coordinate.
      *

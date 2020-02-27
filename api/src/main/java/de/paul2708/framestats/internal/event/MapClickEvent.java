@@ -15,6 +15,8 @@ import org.bukkit.event.HandlerList;
  */
 public final class MapClickEvent extends Event {
 
+    // TODO: Call event, if player clicks between two frames
+
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player player;

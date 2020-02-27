@@ -8,6 +8,8 @@ import java.util.function.Function;
  */
 public final class LinearTransformation {
 
+    // TODO: Del math package
+
     public static Function<Double, Double> transform(Interval from, Interval to) {
         double a = from.getA();
         double b = from.getB();
