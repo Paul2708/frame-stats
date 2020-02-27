@@ -19,27 +19,34 @@ locations:
     pitch: 0.0
     yaw: 0.0
 columns:
-- ==: de.paul2708.framestats.configuration.ColumnConfiguration
+- ==: Column
   max-width: 30
   name: '#'
   index: 0
-- ==: de.paul2708.framestats.configuration.ColumnConfiguration
+- ==: Column
   max-width: 128
   name: 'Spieler'
   index: 1
-- ==: de.paul2708.framestats.configuration.ColumnConfiguration
+- ==: Column
   max-width: 64
   name: 'Kills'
   index: 2
-- ==: de.paul2708.framestats.configuration.ColumnConfiguration
+- ==: Column
   max-width: 64
   name: 'Tode'
   index: 3
-- ==: de.paul2708.framestats.configuration.ColumnConfiguration
+- ==: Column
   max-width: 64
   name: 'Punkte'
   index: 4
 sizes:
   row-height: 20
 rows: 10
+background-image: 'background.jpg'
+search-button:
+  ==: Search-Button
+  x: 10
+  y: 10
+  width: 160
+  height: 20
 ```
