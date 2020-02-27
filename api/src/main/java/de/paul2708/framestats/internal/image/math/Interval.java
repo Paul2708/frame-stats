@@ -5,7 +5,7 @@ package de.paul2708.framestats.internal.image.math;
  *
  * @author Paul2708
  */
-public class Interval {
+public final class Interval {
 
     private final double a;
     private final double b;

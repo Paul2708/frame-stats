@@ -1,6 +1,5 @@
 package de.paul2708.framestats.internal.listener;
 
-import com.comphenix.protocol.PacketType;
 import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.event.MapClickEvent;
 import de.paul2708.framestats.internal.image.calculator.ButtonCalculator;
@@ -41,8 +40,8 @@ public final class MapClickListener implements Listener {
             Location frameLocation = frame.getLocation();
 
             // Calculate absolute table coordinates
-            int xDiff = Math.abs(isAlongZ(frame.getAttachedFace()) ? leftCorner.getBlockX() - frameLocation.getBlockX() :
-                    leftCorner.getBlockZ() - frameLocation.getBlockZ());
+            int xDiff = Math.abs(isAlongZ(frame.getAttachedFace()) ? leftCorner.getBlockX() - frameLocation.getBlockX()
+                    : leftCorner.getBlockZ() - frameLocation.getBlockZ());
             int yDiff = Math.abs(rightCorner.getBlockY() - frameLocation.getBlockY());
 
             int tableX = 128 * xDiff + event.getX();

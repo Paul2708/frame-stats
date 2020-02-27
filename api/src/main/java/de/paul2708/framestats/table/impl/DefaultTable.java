@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;

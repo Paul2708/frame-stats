@@ -36,7 +36,8 @@ public final class PlayerInteractAtEntityListener implements Listener {
             // Calculate clicked coordinate on map
             Vector pos = event.getClickedPosition();
             BlockFace attachedFace = frame.getAttachedFace();
-            double diffX, diffY;
+            double diffX;
+            double diffY;
             if (isAlongZ(attachedFace)) {
                 diffX = pos.getX() + 0.5;
                 diffY = 1.0 - (pos.getY() + 0.5);

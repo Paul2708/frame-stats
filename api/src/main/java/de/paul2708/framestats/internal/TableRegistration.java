@@ -4,7 +4,6 @@ import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.map.MapView;
 
 import java.util.HashMap;
 import java.util.Map;
