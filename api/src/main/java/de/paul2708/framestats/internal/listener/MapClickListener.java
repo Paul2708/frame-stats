@@ -1,14 +1,19 @@
 package de.paul2708.framestats.internal.listener;
 
+import com.comphenix.protocol.PacketType;
 import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.event.MapClickEvent;
+import de.paul2708.framestats.internal.image.calculator.ButtonCalculator;
+import de.paul2708.framestats.internal.search.NameReceiver;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.awt.Point;
 import java.util.Optional;
 
 /**
@@ -25,6 +30,7 @@ public final class MapClickListener implements Listener {
      */
     @EventHandler
     public void onClick(MapClickEvent event) {
+        Player player = event.getPlayer();
         ItemFrame frame = event.getFrame();
         Optional<Table> tableRequest = TableRegistration.getInstance().findByFrame(frame);
 
@@ -42,7 +48,16 @@ public final class MapClickListener implements Listener {
             int tableX = 128 * xDiff + event.getX();
             int tableY = 128 * yDiff + event.getY();
 
-            // TODO: Handle table interaction
+            // TODO: Handle table interaction cleaner!
+            ButtonCalculator calculator = new ButtonCalculator(table.getConfiguration());
+            calculator.calculate();
+
+            if (calculator.result().contains(new Point(tableX, tableY))) {
+                NameReceiver.dummyReceiver().receive(player, name -> {
+                    table.search(player, name);
+                    player.sendMessage("Searching for... " + name);
+                });
+            }
         }
     }
 
