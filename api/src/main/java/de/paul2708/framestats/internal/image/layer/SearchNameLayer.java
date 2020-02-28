@@ -7,18 +7,20 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * This layer draws the search button.
+ * This layer draws the searching name.
  *
  * @author Paul2708
  */
-public class SearchButtonLayer implements ImageLayer {
+public class SearchNameLayer implements ImageLayer {
 
-    private static final Color BUTTON_COLOR = Color.GRAY;
+    private static final Color FONT_COLOR = Color.WHITE;
 
     private final ButtonCalculator calculator;
+    private final String name;
 
-    public SearchButtonLayer(ButtonCalculator calculator) {
+    public SearchNameLayer(ButtonCalculator calculator, String name) {
         this.calculator = calculator;
+        this.name = name;
     }
 
     /**
@@ -34,9 +36,8 @@ public class SearchButtonLayer implements ImageLayer {
         BufferedImage tableImage = clone(image);
         Graphics2D graphics = tableImage.createGraphics();
 
-        graphics.setColor(SearchButtonLayer.BUTTON_COLOR);
-
-        graphics.fill(calculator.result());
+        graphics.setColor(SearchNameLayer.FONT_COLOR);
+        drawText(name, graphics, calculator.result());
 
         return tableImage;
     }

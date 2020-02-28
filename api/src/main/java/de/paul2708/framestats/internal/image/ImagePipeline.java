@@ -10,6 +10,7 @@ import de.paul2708.framestats.internal.image.layer.CroppingLayer;
 import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
 import de.paul2708.framestats.internal.image.layer.SearchButtonLayer;
+import de.paul2708.framestats.internal.image.layer.SearchNameLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
@@ -77,6 +78,7 @@ public final class ImagePipeline {
         );
         layers.add(new ContentLayer(calculator, table.getRows(player)));
         layers.add(new SearchButtonLayer(buttonCalculator));
+        layers.add(new SearchNameLayer(buttonCalculator, "Suche.."));
 
         // Run pipeline
         BufferedImage inputResult = image;
