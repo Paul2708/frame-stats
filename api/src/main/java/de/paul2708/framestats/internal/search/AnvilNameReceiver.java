@@ -15,6 +15,9 @@ import java.util.function.Consumer;
  */
 public final class AnvilNameReceiver implements NameReceiver {
 
+    // TODO: Clicks on other slots will close the gui without entering a name
+    // TODO: Clean up anvil package
+
     /**
      * Receive the searched user by the user.
      * The consumer accepts the searched string.
