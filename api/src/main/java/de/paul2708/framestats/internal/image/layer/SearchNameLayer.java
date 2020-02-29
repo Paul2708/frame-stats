@@ -36,8 +36,7 @@ public class SearchNameLayer implements ImageLayer {
         BufferedImage tableImage = clone(image);
         Graphics2D graphics = tableImage.createGraphics();
 
-        graphics.setColor(SearchNameLayer.FONT_COLOR);
-        drawText(name, graphics, calculator.result());
+        drawText(name, FONT_COLOR, graphics, calculator.result());
 
         return tableImage;
     }

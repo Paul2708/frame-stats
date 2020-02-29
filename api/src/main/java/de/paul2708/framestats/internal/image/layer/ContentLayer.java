@@ -47,8 +47,6 @@ public class ContentLayer implements ImageLayer {
         BufferedImage tableImage = clone(image);
         Graphics2D graphics = tableImage.createGraphics();
 
-        graphics.setColor(ContentLayer.FONT_COLOR);
-
         Rectangle[][] rectangles = calculator.result();
 
         for (int i = 0; i < rows.size(); i++) {
@@ -58,7 +56,7 @@ public class ContentLayer implements ImageLayer {
                 String cell = row.getEntries()[j];
 
                 // [i + 1] as [0] is the heading row
-                drawText(cell, graphics, rectangles[i + 1][j]);
+                drawText(cell, FONT_COLOR, graphics, rectangles[i + 1][j]);
             }
         }
 

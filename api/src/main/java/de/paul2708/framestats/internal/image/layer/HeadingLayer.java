@@ -43,14 +43,12 @@ public class HeadingLayer implements ImageLayer {
         BufferedImage tableImage = clone(image);
         Graphics2D graphics = tableImage.createGraphics();
 
-        graphics.setColor(HeadingLayer.FONT_COLOR);
-
         Rectangle[][] rectangles = calculator.result();
 
         for (int i = 0; i < rectangles[0].length; i++) {
             Rectangle headingCell = rectangles[0][i];
 
-            drawText(headings.get(i), graphics, headingCell);
+            drawText(headings.get(i), FONT_COLOR, graphics, headingCell);
         }
 
         return tableImage;
