@@ -10,7 +10,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 /**
- * Class description.
+ * This class renders the table for a given player.
  *
  * @author Paul2708
  */
@@ -20,13 +20,24 @@ public final class TableView {
     private final Player player;
     private final TableRenderer[][] view;
 
+    /**
+     * Create a new (empty) table view for the given player.
+     *
+     * @param table table to view
+     * @param view table renderer frames
+     * @param player player to show the table
+     */
     public TableView(Table table, TableRenderer[][] view, Player player) {
         this.table = table;
         this.view = view;
         this.player = player;
     }
 
+    /**
+     * Run the {@link ImagePipeline} and apply the image to the table renderers.
+     */
     public void draw() {
+        // TODO: Add methods to update only needed images
         BufferedImage image = new ImagePipeline(table, player).run();
         ImageSplitter splitter = new ImageSplitter();
         Image[][] images = splitter.splitImage(image);
