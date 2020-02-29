@@ -44,8 +44,7 @@ public class TableLayer implements ImageLayer {
 
         for (Rectangle[] rectangles : calculator.result()) {
             for (Rectangle rectangle : rectangles) {
-                graphics.fillRect((int) rectangle.getX(), (int) rectangle.getY(),
-                        (int) rectangle.getWidth(), (int) rectangle.getHeight());
+                graphics.fill(rectangle);
             }
         }
 
