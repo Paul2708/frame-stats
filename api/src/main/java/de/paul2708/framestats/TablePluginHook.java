@@ -7,6 +7,7 @@ import de.paul2708.framestats.internal.listener.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
 /**
  * This class is used to hook into the plugin that uses the api.
@@ -14,6 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Paul2708
  */
 public final class TablePluginHook {
+
+    private static JavaPlugin plugin;
 
     /**
      * Private constructor to prevent object creation.
@@ -30,12 +33,18 @@ public final class TablePluginHook {
      * @param plugin plugin that uses the api
      */
     public static void initialize(JavaPlugin plugin) {
+        TablePluginHook.plugin = plugin;
+
         // Register listener
         registerListener(plugin,
                 new PlayerJoinListener(),
                 new PlayerInteractEntityListener(),
                 new PlayerInteractAtEntityListener(),
                 new MapClickListener());
+    }
+
+    public static JavaPlugin getPlugin() {
+        return plugin;
     }
 
     /**
