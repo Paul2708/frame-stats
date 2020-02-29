@@ -52,7 +52,7 @@ public final class MapClickListener implements Listener {
             calculator.calculate();
 
             if (calculator.result().contains(new Point(tableX, tableY))) {
-                NameReceiver.dummyReceiver().receive(player, name -> {
+                NameReceiver.anvilReceiver().receive(player, name -> {
                     table.search(player, name);
                     player.sendMessage("Searching for... " + name);
                 });

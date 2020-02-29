@@ -31,4 +31,13 @@ public interface NameReceiver {
     static NameReceiver dummyReceiver() {
         return (player, consumer) -> consumer.accept(player.getName());
     }
+
+    /**
+     * Get an anvil receiver instance.
+     *
+     * @return anvil name receiver
+     */
+    static NameReceiver anvilReceiver() {
+        return new AnvilNameReceiver();
+    }
 }
