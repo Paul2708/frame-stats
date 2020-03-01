@@ -33,10 +33,11 @@ public final class DefaultTable implements Table {
     private final TableConfiguration configuration;
 
     private TableSearcher searcher;
-
-    private Set<TableView> views;
     private List<TableRow> defaultRows;
-    private Map<Player, List<TableRow>> playerRows;
+
+    private final Set<TableView> views;
+    private final Map<Player, List<TableRow>> playerRows;
+    private final List<TableInteraction> interactions;
 
     /**
      * Create a new default table.
@@ -48,6 +49,7 @@ public final class DefaultTable implements Table {
 
         this.views = new HashSet<>();
         this.playerRows = new HashMap<>();
+        this.interactions = new LinkedList<>();
     }
 
     /**
@@ -151,6 +153,6 @@ public final class DefaultTable implements Table {
      */
     @Override
     public List<TableInteraction> getInteractions() {
-        return null;
+        return interactions;
     }
 }
