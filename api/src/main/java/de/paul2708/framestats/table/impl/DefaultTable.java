@@ -4,6 +4,7 @@ import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.internal.frame.FramePlacer;
+import de.paul2708.framestats.internal.interaction.SearchInteraction;
 import de.paul2708.framestats.internal.interaction.TableInteraction;
 import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.table.Table;
@@ -50,6 +51,9 @@ public final class DefaultTable implements Table {
         this.views = new HashSet<>();
         this.playerRows = new HashMap<>();
         this.interactions = new LinkedList<>();
+
+        // Load interactions
+        interactions.add(new SearchInteraction(configuration));
     }
 
     /**
