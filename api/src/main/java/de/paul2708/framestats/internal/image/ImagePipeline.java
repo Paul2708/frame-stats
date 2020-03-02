@@ -33,6 +33,12 @@ public final class ImagePipeline {
     private final Table table;
     private final Player player;
 
+    private PositionCalculator positionCalculator;
+    private ButtonCalculator buttonCalculator;
+
+    private BufferedImage baseImage;
+    private BufferedImage currentImage;
+
     /**
      * Create a new image pipeline.
      *
@@ -44,44 +50,104 @@ public final class ImagePipeline {
     }
 
     /**
-     * Run the pipeline by loading the initial image and applying the layers.
+     * Run the pipeline fully by creating base, table content and search button.
      *
-     * @return create image
+     * @return image pipeline
      */
-    public BufferedImage run() {
-        // Prepare used layer references
-        TableConfiguration configuration = table.getConfiguration();
-        PositionCalculator calculator = new PositionCalculator(configuration);
-        calculator.calculate();
+    public ImagePipeline runFully() {
+        this.currentImage = this.baseImage()
+                .applyTableContent()
+                .applySearch("Suche..")
+                .get();
 
-        ButtonCalculator buttonCalculator = new ButtonCalculator(configuration);
-        buttonCalculator.calculate();
+        return this;
+    }
 
-        // Load image
-        // TODO: Replace with config one
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(configuration.getBackgroundPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
+    /**
+     * Create the base image once.
+     *
+     * @return image pipeline
+     */
+    public ImagePipeline baseImage() {
+        if (baseImage == null) {
+            // Prepare used layer references and calculate positions
+            TableConfiguration configuration = table.getConfiguration();
+
+            this.positionCalculator = new PositionCalculator(configuration);
+            this.buttonCalculator = new ButtonCalculator(configuration);
+
+            positionCalculator.calculate();
+            buttonCalculator.calculate();
+
+            // Load image
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new File(configuration.getBackgroundPath()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Init pipeline
+            List<ImageLayer> layers = new LinkedList<>();
+            layers.add(new CroppingLayer(configuration.getWidth(), configuration.getHeight()));
+            layers.add(new BackgroundLayer());
+            layers.add(new TableLayer(positionCalculator));
+            layers.add(new HeadingLayer(positionCalculator, configuration.getColumnConfigurations()
+                    .stream()
+                    .map(ColumnConfiguration::getName)
+                    .collect(Collectors.toList()))
+            );
+            layers.add(new SearchButtonLayer(buttonCalculator));
+            this.baseImage = run(image, layers);
         }
 
-        // Init pipeline
-        List<ImageLayer> layers = new LinkedList<>();
-        layers.add(new CroppingLayer(configuration.getWidth(), configuration.getHeight()));
-        layers.add(new BackgroundLayer());
-        layers.add(new TableLayer(calculator));
-        layers.add(new HeadingLayer(calculator, configuration.getColumnConfigurations()
-                .stream()
-                .map(ColumnConfiguration::getName)
-                .collect(Collectors.toList()))
-        );
-        layers.add(new ContentLayer(calculator, table.getRows(player)));
-        layers.add(new SearchButtonLayer(buttonCalculator));
-        layers.add(new SearchNameLayer(buttonCalculator, "Suche.."));
+        this.currentImage = baseImage;
 
-        // Run pipeline
-        BufferedImage inputResult = image;
+        return this;
+    }
+
+    /**
+     * Create the table content.
+     *
+     * @return image pipeline
+     */
+    public ImagePipeline applyTableContent() {
+        this.currentImage = new ContentLayer(positionCalculator, table.getRows(player)).apply(currentImage);
+        return this;
+    }
+
+    /**
+     * Create the search button with objective.
+     *
+     * @param name name to search for
+     * @return image pipeline
+     */
+    public ImagePipeline applySearch(String name) {
+        this.currentImage = new SearchNameLayer(buttonCalculator, name)
+                .apply(new SearchButtonLayer(buttonCalculator)
+                        .apply(currentImage));
+
+        return this;
+    }
+
+    /**
+     * Get the created image.
+     *
+     * @return created image
+     */
+    public BufferedImage get() {
+        return currentImage;
+    }
+
+    /**
+     * Apply all layers one by one.
+     *
+     * @param input input image
+     * @param layers layers to apply
+     * @return created image
+     */
+    private BufferedImage run(BufferedImage input, List<ImageLayer> layers) {
+        BufferedImage inputResult = input;
         for (ImageLayer layer : layers) {
             inputResult = layer.apply(inputResult);
         }

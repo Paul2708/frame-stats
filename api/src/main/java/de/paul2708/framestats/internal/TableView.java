@@ -7,7 +7,6 @@ import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 
 /**
  * This class renders the table for a given player.
@@ -16,9 +15,10 @@ import java.awt.image.BufferedImage;
  */
 public final class TableView {
 
-    private final Table table;
     private final Player player;
     private final TableRenderer[][] view;
+
+    private final ImagePipeline pipeline;
 
     /**
      * Create a new (empty) table view for the given player.
@@ -28,19 +28,38 @@ public final class TableView {
      * @param player player to show the table
      */
     public TableView(Table table, TableRenderer[][] view, Player player) {
-        this.table = table;
         this.view = view;
         this.player = player;
+
+        this.pipeline = new ImagePipeline(table, player);
     }
 
     /**
-     * Run the {@link ImagePipeline} and apply the image to the table renderers.
+     * Redraw the whole table.
      */
-    public void draw() {
-        // TODO: Add methods to update only needed images
-        BufferedImage image = new ImagePipeline(table, player).run();
+    public void redraw() {
+        pipeline.runFully();
+        draw();
+    }
+
+    /**
+     * Draw the search objective and results.
+     *
+     * @param name name to search for
+     */
+    public void drawSearch(String name) {
+        pipeline.baseImage()
+                .applyTableContent()
+                .applySearch(name);
+        draw();
+    }
+
+    /**
+     * Draw the pipeline image to the item frames.
+     */
+    private void draw() {
         ImageSplitter splitter = new ImageSplitter();
-        Image[][] images = splitter.splitImage(image);
+        Image[][] images = splitter.splitImage(pipeline.get());
 
         for (int i = 0; i < images.length; i++) {
             for (int j = 0; j < images[0].length; j++) {

@@ -77,7 +77,7 @@ public final class DefaultTable implements Table {
                 searcher.search(player, name).stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
 
         for (TableView view : views) {
-            view.draw();
+            view.drawSearch(name);
         }
     }
 
