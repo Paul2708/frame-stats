@@ -34,7 +34,7 @@ public final class DefaultTable implements Table {
     private final TableConfiguration configuration;
 
     private TableSearcher searcher;
-    private List<TableRow> defaultRows;
+    private List<TableRow> tableContent;
 
     private final Set<TableView> views;
     private final Map<Player, List<TableRow>> playerRows;
@@ -83,7 +83,7 @@ public final class DefaultTable implements Table {
 
     @Override
     public void fill(List<TableRow> rows) {
-        this.defaultRows = rows.stream().limit(configuration.getRows() - 1).collect(Collectors.toList());
+        this.tableContent = rows.stream().limit(configuration.getRows() - 1).collect(Collectors.toList());
     }
 
     /**
@@ -94,7 +94,7 @@ public final class DefaultTable implements Table {
     @Override
     public List<TableRow> getRows(Player player) {
         // TODO: Implement me
-        return playerRows.getOrDefault(player, defaultRows);
+        return playerRows.getOrDefault(player, tableContent);
     }
 
     /**

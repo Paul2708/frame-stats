@@ -49,7 +49,7 @@ public class ContentLayer implements ImageLayer {
 
         Rectangle[][] rectangles = calculator.result();
 
-        for (int i = 0; i < rows.size(); i++) {
+        for (int i = 0; i < rectangles.length - 1; i++) {
             TableRow row = rows.get(i);
 
             for (int j = 0; j < row.getEntries().length; j++) {
