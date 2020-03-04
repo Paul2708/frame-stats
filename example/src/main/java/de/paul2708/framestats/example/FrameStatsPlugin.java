@@ -6,6 +6,10 @@ import de.paul2708.framestats.exception.InvalidConfigurationException;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -74,6 +78,21 @@ public class FrameStatsPlugin extends JavaPlugin {
                 .collect(Collectors.toList()));
 
         table.register();
+
+        getCommand("test").setExecutor(new CommandExecutor() {
+            @Override
+            public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+                if (args[0].equals("skip")) {
+                    table.changePage((Player) sender, 1);
+                    sender.sendMessage("Page + 1");
+                } else {
+                    table.changePage((Player) sender, -1);
+                    sender.sendMessage("Page - 1");
+                }
+
+                return true;
+            }
+        });
     }
 
     /**
@@ -88,7 +107,7 @@ public class FrameStatsPlugin extends JavaPlugin {
         this.database.clear();
 
         for (int i = 0; i < 500; i++) {
-            database.add(PlayerStatistics.create());
+            database.add(PlayerStatistics.create(i));
         }
 
         Collections.sort(database);

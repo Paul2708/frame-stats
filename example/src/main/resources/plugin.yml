@@ -3,3 +3,6 @@ author: Paul2708
 version: 0.0.1
 main: de.paul2708.framestats.example.FrameStatsPlugin
 api-version: '1.8'
+
+commands:
+  test:

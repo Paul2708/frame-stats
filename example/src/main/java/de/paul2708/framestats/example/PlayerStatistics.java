@@ -59,12 +59,12 @@ public final class PlayerStatistics implements Comparable<PlayerStatistics> {
         return Integer.compare(stats.points, points);
     }
 
-    public static PlayerStatistics create() {
+    public static PlayerStatistics create(int index) {
         Random random = ThreadLocalRandom.current();
         String name = PlayerStatistics.NAMES[random.nextInt(PlayerStatistics.NAMES.length)];
         int kills = random.nextInt(100);
         int deaths = random.nextInt(100);
-        int points = random.nextInt(200);
+        int points = index;
 
         return new PlayerStatistics(name, kills, deaths, points);
     }
