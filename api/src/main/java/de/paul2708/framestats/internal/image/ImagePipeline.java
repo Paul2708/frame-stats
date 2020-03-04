@@ -2,13 +2,15 @@ package de.paul2708.framestats.internal.image;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
-import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
+import de.paul2708.framestats.internal.image.calculator.PageBarCalculator;
 import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
+import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
 import de.paul2708.framestats.internal.image.layer.ContentLayer;
 import de.paul2708.framestats.internal.image.layer.CroppingLayer;
 import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
+import de.paul2708.framestats.internal.image.layer.SearchBarLayer;
 import de.paul2708.framestats.internal.image.layer.SearchButtonLayer;
 import de.paul2708.framestats.internal.image.layer.SearchNameLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
@@ -35,6 +37,7 @@ public final class ImagePipeline {
 
     private PositionCalculator positionCalculator;
     private SearchButtonCalculator searchButtonCalculator;
+    private PageBarCalculator pageBarCalculator;
 
     private BufferedImage baseImage;
     private BufferedImage currentImage;
@@ -58,6 +61,7 @@ public final class ImagePipeline {
         this.currentImage = this.baseImage()
                 .applyTableContent()
                 .applySearch("Suche..")
+                .applyPageBar()
                 .get();
 
         return this;
@@ -75,9 +79,11 @@ public final class ImagePipeline {
 
             this.positionCalculator = new PositionCalculator(configuration);
             this.searchButtonCalculator = new SearchButtonCalculator(configuration);
+            this.pageBarCalculator = new PageBarCalculator(configuration);
 
             positionCalculator.calculate();
             searchButtonCalculator.calculate();
+            pageBarCalculator.calculate();
 
             // Load image
             BufferedImage image = null;
@@ -127,6 +133,11 @@ public final class ImagePipeline {
                 .apply(new SearchButtonLayer(searchButtonCalculator)
                         .apply(currentImage));
 
+        return this;
+    }
+
+    public ImagePipeline applyPageBar() {
+        this.currentImage = new SearchBarLayer(pageBarCalculator.result()).apply(currentImage);
         return this;
     }
 

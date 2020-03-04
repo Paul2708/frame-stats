@@ -50,6 +50,7 @@ public final class TableView {
     public void drawSearch(String name) {
         pipeline.baseImage()
                 .applyTableContent()
+                .applyPageBar()
                 .applySearch(name);
         draw();
     }
@@ -57,6 +58,7 @@ public final class TableView {
     public void drawContent() {
         pipeline.baseImage()
                 .applyTableContent()
+                .applyPageBar()
                 .applySearch("Suche..");
         draw();
     }
