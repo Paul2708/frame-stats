@@ -16,6 +16,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -37,7 +39,9 @@ public final class DefaultTable implements Table {
     private List<TableRow> tableContent;
 
     private final Set<TableView> views;
+    // TODO: Add own object
     private final Map<Player, List<TableRow>> playerRows;
+    private final Map<Player, Integer> playerPages;
     private final List<TableInteraction> interactions;
 
     /**
@@ -50,6 +54,7 @@ public final class DefaultTable implements Table {
 
         this.views = new HashSet<>();
         this.playerRows = new HashMap<>();
+        this.playerPages = new HashMap<>();
         this.interactions = new LinkedList<>();
 
         // Load interactions
@@ -83,7 +88,25 @@ public final class DefaultTable implements Table {
 
     @Override
     public void fill(List<TableRow> rows) {
-        this.tableContent = rows.stream().limit(configuration.getRows() - 1).collect(Collectors.toList());
+        this.tableContent = new ArrayList<>(rows);
+    }
+
+    @Override
+    public void changePage(Player player, int delta) {
+        int page = playerPages.getOrDefault(player, 1);
+
+        if (page + delta < 1) {
+            return;
+        }
+
+        playerPages.put(player, page + delta);
+
+        int skipEntries = (playerPages.get(player) - 1) * (configuration.getRows() - 1);
+        playerRows.put(player, tableContent.stream().skip(skipEntries).collect(Collectors.toList()));
+
+        for (TableView view : views) {
+            view.drawContent();
+        }
     }
 
     /**

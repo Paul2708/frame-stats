@@ -17,6 +17,8 @@ import java.util.List;
  */
 public interface Table {
 
+    // TODO: Wrap stats table
+
     /**
      * Set the search routine.
      *
@@ -32,6 +34,9 @@ public interface Table {
     void search(Player player, String name);
 
     void fill(List<TableRow> rows);
+
+    // TODO: Add enum
+    void changePage(Player player, int delta);
 
     /**
      * Get an unmodifiable list of the current displayed rows.

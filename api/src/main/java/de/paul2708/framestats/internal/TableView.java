@@ -54,6 +54,13 @@ public final class TableView {
         draw();
     }
 
+    public void drawContent() {
+        pipeline.baseImage()
+                .applyTableContent()
+                .applySearch("Suche..");
+        draw();
+    }
+
     /**
      * Draw the pipeline image to the item frames.
      */
