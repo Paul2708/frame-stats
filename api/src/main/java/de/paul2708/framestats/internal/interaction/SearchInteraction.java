@@ -1,7 +1,7 @@
 package de.paul2708.framestats.internal.interaction;
 
 import de.paul2708.framestats.configuration.TableConfiguration;
-import de.paul2708.framestats.internal.image.calculator.ButtonCalculator;
+import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
 import de.paul2708.framestats.internal.search.NameReceiver;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
@@ -25,7 +25,7 @@ public final class SearchInteraction implements TableInteraction {
      * @param configuration table configuration
      */
     public SearchInteraction(TableConfiguration configuration) {
-        ButtonCalculator calculator = new ButtonCalculator(configuration);
+        SearchButtonCalculator calculator = new SearchButtonCalculator(configuration);
         calculator.calculate();
 
         this.rectangle = calculator.result();

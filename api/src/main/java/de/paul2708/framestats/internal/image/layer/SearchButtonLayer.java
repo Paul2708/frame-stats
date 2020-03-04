@@ -1,6 +1,6 @@
 package de.paul2708.framestats.internal.image.layer;
 
-import de.paul2708.framestats.internal.image.calculator.ButtonCalculator;
+import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,9 +15,9 @@ public class SearchButtonLayer implements ImageLayer {
 
     private static final Color BUTTON_COLOR = Color.GRAY;
 
-    private final ButtonCalculator calculator;
+    private final SearchButtonCalculator calculator;
 
-    public SearchButtonLayer(ButtonCalculator calculator) {
+    public SearchButtonLayer(SearchButtonCalculator calculator) {
         this.calculator = calculator;
     }
 

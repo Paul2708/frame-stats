@@ -10,7 +10,7 @@ import java.awt.Rectangle;
  *
  * @author Paul2708
  */
-public class ButtonCalculator {
+public class SearchButtonCalculator {
 
     // TODO: Use common Calculator interface
 
@@ -18,7 +18,7 @@ public class ButtonCalculator {
 
     private Rectangle button;
 
-    public ButtonCalculator(TableConfiguration configuration) {
+    public SearchButtonCalculator(TableConfiguration configuration) {
         this.configuration = configuration;
     }
 

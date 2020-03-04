@@ -2,7 +2,7 @@ package de.paul2708.framestats.internal.image;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
-import de.paul2708.framestats.internal.image.calculator.ButtonCalculator;
+import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
 import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
 import de.paul2708.framestats.internal.image.layer.ContentLayer;
@@ -34,7 +34,7 @@ public final class ImagePipeline {
     private final Player player;
 
     private PositionCalculator positionCalculator;
-    private ButtonCalculator buttonCalculator;
+    private SearchButtonCalculator searchButtonCalculator;
 
     private BufferedImage baseImage;
     private BufferedImage currentImage;
@@ -74,10 +74,10 @@ public final class ImagePipeline {
             TableConfiguration configuration = table.getConfiguration();
 
             this.positionCalculator = new PositionCalculator(configuration);
-            this.buttonCalculator = new ButtonCalculator(configuration);
+            this.searchButtonCalculator = new SearchButtonCalculator(configuration);
 
             positionCalculator.calculate();
-            buttonCalculator.calculate();
+            searchButtonCalculator.calculate();
 
             // Load image
             BufferedImage image = null;
@@ -97,7 +97,7 @@ public final class ImagePipeline {
                     .map(ColumnConfiguration::getName)
                     .collect(Collectors.toList()))
             );
-            layers.add(new SearchButtonLayer(buttonCalculator));
+            layers.add(new SearchButtonLayer(searchButtonCalculator));
             this.baseImage = run(image, layers);
         }
 
@@ -123,8 +123,8 @@ public final class ImagePipeline {
      * @return image pipeline
      */
     public ImagePipeline applySearch(String name) {
-        this.currentImage = new SearchNameLayer(buttonCalculator, name)
-                .apply(new SearchButtonLayer(buttonCalculator)
+        this.currentImage = new SearchNameLayer(searchButtonCalculator, name)
+                .apply(new SearchButtonLayer(searchButtonCalculator)
                         .apply(currentImage));
 
         return this;
