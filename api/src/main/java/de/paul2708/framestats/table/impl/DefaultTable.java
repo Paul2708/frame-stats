@@ -82,8 +82,7 @@ public final class DefaultTable implements Table {
      */
     @Override
     public void search(Player player, String name) {
-        this.playerRows.put(player,
-                searcher.search(player, name).stream().limit(configuration.getRows() - 1).collect(Collectors.toList()));
+        this.playerRows.put(player, searcher.search(player, name));
 
         for (TableView view : views) {
             view.drawSearch(name);
@@ -106,7 +105,7 @@ public final class DefaultTable implements Table {
         playerPages.put(player, page + delta);
 
         int skipEntries = (playerPages.get(player) - 1) * (configuration.getRows() - 1);
-        playerRows.put(player, tableContent.stream().skip(skipEntries).collect(Collectors.toList()));
+        playerRows.put(player, playerRows.getOrDefault(player, tableContent).stream().skip(skipEntries).collect(Collectors.toList()));
 
         for (TableView view : views) {
             view.drawContent();
