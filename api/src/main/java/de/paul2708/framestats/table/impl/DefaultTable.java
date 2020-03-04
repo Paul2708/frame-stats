@@ -41,7 +41,7 @@ public final class DefaultTable implements Table {
     private List<TableRow> tableContent;
 
     private final Set<TableView> views;
-    // TODO: Add own object
+    // TODO: Add own object with searched name
     private final Map<Player, List<TableRow>> playerRows;
     private final Map<Player, Integer> playerPages;
     private final List<TableInteraction> interactions;
