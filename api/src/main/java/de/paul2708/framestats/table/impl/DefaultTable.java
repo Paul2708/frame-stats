@@ -4,6 +4,7 @@ import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.internal.frame.FramePlacer;
+import de.paul2708.framestats.internal.interaction.BackPageInteraction;
 import de.paul2708.framestats.internal.interaction.SearchInteraction;
 import de.paul2708.framestats.internal.interaction.TableInteraction;
 import de.paul2708.framestats.internal.renderer.TableRenderer;
@@ -59,6 +60,7 @@ public final class DefaultTable implements Table {
 
         // Load interactions
         interactions.add(new SearchInteraction(configuration));
+        interactions.add(new BackPageInteraction(configuration));
     }
 
     /**
