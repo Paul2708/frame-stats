@@ -18,6 +18,8 @@ import java.awt.image.WritableRaster;
 @FunctionalInterface
 public interface ImageLayer {
 
+    // TODO: Use clone not in layer method
+
     /**
      * Apply the layer onto the given image.
      * Note: The input image should not be changed.

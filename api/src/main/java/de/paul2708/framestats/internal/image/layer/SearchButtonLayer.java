@@ -37,6 +37,8 @@ public class SearchButtonLayer implements ImageLayer {
         graphics.setColor(SearchButtonLayer.BUTTON_COLOR);
 
         graphics.fill(calculator.result());
+        graphics.setColor(Color.WHITE);
+        graphics.draw(calculator.result());
 
         return tableImage;
     }

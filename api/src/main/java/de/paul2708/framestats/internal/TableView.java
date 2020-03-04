@@ -55,11 +55,12 @@ public final class TableView {
         draw();
     }
 
+    // TODO: Searching term misses after page change
+
     public void drawContent() {
         pipeline.baseImage()
                 .applyTableContent()
-                .applyPageBar()
-                .applySearch("Suche..");
+                .applyPageBar();
         draw();
     }
 
