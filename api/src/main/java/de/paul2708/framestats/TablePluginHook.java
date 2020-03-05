@@ -1,5 +1,6 @@
 package de.paul2708.framestats;
 
+import de.paul2708.framestats.internal.listener.HangingBreakListener;
 import de.paul2708.framestats.internal.listener.MapClickListener;
 import de.paul2708.framestats.internal.listener.PlayerInteractAtEntityListener;
 import de.paul2708.framestats.internal.listener.PlayerInteractEntityListener;
@@ -7,7 +8,6 @@ import de.paul2708.framestats.internal.listener.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 
 /**
  * This class is used to hook into the plugin that uses the api.
@@ -40,7 +40,8 @@ public final class TablePluginHook {
                 new PlayerJoinListener(),
                 new PlayerInteractEntityListener(),
                 new PlayerInteractAtEntityListener(),
-                new MapClickListener());
+                new MapClickListener(),
+                new HangingBreakListener());
     }
 
     public static JavaPlugin getPlugin() {
