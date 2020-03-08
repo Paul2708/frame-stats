@@ -3,7 +3,7 @@ package de.paul2708.framestats.internal;
 import de.paul2708.framestats.internal.image.ImagePipeline;
 import de.paul2708.framestats.internal.image.ImageSplitter;
 import de.paul2708.framestats.internal.renderer.TableRenderer;
-import de.paul2708.framestats.table.Table;
+import de.paul2708.framestats.internal.state.TableState;
 import org.bukkit.entity.Player;
 
 import java.awt.Image;
@@ -16,22 +16,24 @@ import java.awt.Image;
 public final class TableView {
 
     private final Player player;
-    private final TableRenderer[][] view;
+    private final TableState state;
+    private final TableRenderer[][] renderer;
 
     private final ImagePipeline pipeline;
 
     /**
-     * Create a new (empty) table view for the given player.
+     * Create a new table view.
      *
-     * @param table table to view
-     * @param view table renderer frames
-     * @param player player to show the table
+     * @param player player to render the view for
+     * @param state table state that will be rendered
+     * @param view physical item frame renderer
      */
-    public TableView(Table table, TableRenderer[][] view, Player player) {
-        this.view = view;
+    public TableView(Player player, TableState state, TableRenderer[][] view) {
+        this.renderer = view;
+        this.state = state;
         this.player = player;
 
-        this.pipeline = new ImagePipeline(table, player);
+        this.pipeline = new ImagePipeline(state.getTable(), state);
     }
 
     /**
@@ -44,19 +46,18 @@ public final class TableView {
 
     /**
      * Draw the search objective and results.
-     *
-     * @param name name to search for
      */
-    public void drawSearch(String name) {
+    public void drawSearch() {
         pipeline.baseImage()
                 .applyTableContent()
                 .applyPageBar()
-                .applySearch(name);
+                .applySearch(state.getSearchTerm());
         draw();
     }
 
-    // TODO: Searching term misses after page change
-
+    /**
+     * Draw the current table content (depending on the player).
+     */
     public void drawContent() {
         pipeline.baseImage()
                 .applyTableContent()
@@ -73,7 +74,7 @@ public final class TableView {
 
         for (int i = 0; i < images.length; i++) {
             for (int j = 0; j < images[0].length; j++) {
-                view[i][j].render(player, images[i][j]);
+                renderer[i][j].render(player, images[i][j]);
             }
         }
     }

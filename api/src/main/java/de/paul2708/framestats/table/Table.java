@@ -1,8 +1,8 @@
 package de.paul2708.framestats.table;
 
 import de.paul2708.framestats.configuration.TableConfiguration;
-import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.internal.interaction.TableInteraction;
+import de.paul2708.framestats.internal.state.TableState;
 import de.paul2708.framestats.table.impl.DefaultTable;
 import org.bukkit.entity.Player;
 
@@ -11,47 +11,56 @@ import java.util.List;
 /**
  * This interface represents the functional table.
  * One table refers to every player.
- * The view will be separated internal.
+ * The view and its states will be separated internal.
  *
  * @author Paul2708
  */
 public interface Table {
 
-    // TODO: Wrap stats table
-
     /**
      * Set the search routine.
+     * It will call {@link TableSearcher#search(Player, String)} if a player searches for a term.
+     * <br>
+     * Has to be set before {@link #register()} the table.
      *
-     * @param searcher searcher
+     * @see TableSearcher#search(Player, String)
+     * @see #search(Player, String)
+     * @param searcher table searcher
      */
     void setSearcher(TableSearcher searcher);
 
     /**
-     * Search for a name.
+     * Fill the table with content.
+     * It has to be called one time - before registering the table.
      *
-     * @param name name to search for
+     * @param rows list of table row entries
      */
-    void search(Player player, String name);
-
     void fill(List<TableRow> rows);
 
-    // TODO: Add enum
-    void changePage(Player player, int delta);
+    /**
+     * Let a player search for a given term.
+     * It updates the players table with rows that matches the result.
+     *
+     * @see #setSearcher(TableSearcher)
+     * @param term term to search for
+     */
+    void search(Player player, String term);
 
     /**
-     * Get an unmodifiable list of the current displayed rows.
+     * Get the players table state.
      *
-     * @return unmodifiable list of rows
+     * @param player player to get the state for
+     * @return internal table state
      */
-    List<TableRow> getRows(Player player);
+    TableState getState(Player player);
 
     /**
-     * Internal method.
-     * Map a table view to this table.
+     * Get the filled content.
      *
-     * @param view table view
+     * @see #fill(List)
+     * @return unmodifiable list of table rows
      */
-    void addView(TableView view);
+    List<TableRow> getContent();
 
     /**
      * Register the table.
@@ -61,13 +70,6 @@ public interface Table {
     void register();
 
     /**
-     * Get the table configuration.
-     *
-     * @return configuration
-     */
-    TableConfiguration getConfiguration();
-
-    /**
      * Get an unmodifiable list of all (implicit registered) interactions.
      *
      * @return unmodifiable list of interactions
@@ -75,9 +77,17 @@ public interface Table {
     List<TableInteraction> getInteractions();
 
     /**
-     * Create a new table instance by configuration.
-     * After configuring it use {@link #register()}.
+     * Get the table configuration.
      *
+     * @return configuration
+     */
+    TableConfiguration getConfiguration();
+
+    /**
+     * Create a new table instance by configuration.
+     * After configuring it use {@link #register()} to register the table.
+     *
+     * @see #register()
      * @see TableConfiguration#load(String)
      * @param configuration already valid and loaded configuration
      * @return created table

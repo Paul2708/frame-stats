@@ -14,8 +14,8 @@ import de.paul2708.framestats.internal.image.layer.SearchBarLayer;
 import de.paul2708.framestats.internal.image.layer.SearchButtonLayer;
 import de.paul2708.framestats.internal.image.layer.SearchNameLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
+import de.paul2708.framestats.internal.state.TableState;
 import de.paul2708.framestats.table.Table;
-import org.bukkit.entity.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public final class ImagePipeline {
 
     private final Table table;
-    private final Player player;
+    private final TableState tableState;
 
     private PositionCalculator positionCalculator;
     private SearchButtonCalculator searchButtonCalculator;
@@ -42,14 +42,9 @@ public final class ImagePipeline {
     private BufferedImage baseImage;
     private BufferedImage currentImage;
 
-    /**
-     * Create a new image pipeline.
-     *
-     * @param table referring table
-     */
-    public ImagePipeline(Table table, Player player) {
+    public ImagePipeline(Table table, TableState tableState) {
         this.table = table;
-        this.player = player;
+        this.tableState = tableState;
     }
 
     /**
@@ -118,7 +113,7 @@ public final class ImagePipeline {
      * @return image pipeline
      */
     public ImagePipeline applyTableContent() {
-        this.currentImage = new ContentLayer(positionCalculator, table.getRows(player)).apply(currentImage);
+        this.currentImage = new ContentLayer(positionCalculator, tableState.getContent()).apply(currentImage);
         return this;
     }
 

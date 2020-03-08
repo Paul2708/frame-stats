@@ -3,6 +3,7 @@ package de.paul2708.framestats.internal.interaction;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.image.calculator.PageBar;
 import de.paul2708.framestats.internal.image.calculator.PageBarCalculator;
+import de.paul2708.framestats.internal.state.PageShift;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
 
@@ -11,6 +12,8 @@ import java.awt.Shape;
 public final class BackPageInteraction implements TableInteraction {
 
     private final PageBar pageBar;
+
+    // TODO: Rename classes
 
     /**
      * Create a new search interaction and calculate the needed position.
@@ -32,7 +35,8 @@ public final class BackPageInteraction implements TableInteraction {
      */
     @Override
     public void interact(Player player, Table table) {
-        table.changePage(player, -1);
+        table.getState(player).changePage(PageShift.PREVIOUS);
+
         player.sendMessage("Go back one page");
     }
 

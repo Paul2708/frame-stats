@@ -3,6 +3,7 @@ package de.paul2708.framestats.internal.interaction;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.image.calculator.PageBar;
 import de.paul2708.framestats.internal.image.calculator.PageBarCalculator;
+import de.paul2708.framestats.internal.state.PageShift;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
 
@@ -32,7 +33,7 @@ public final class SkipPageInteraction implements TableInteraction {
      */
     @Override
     public void interact(Player player, Table table) {
-        table.changePage(player, 1);
+        table.getState(player).changePage(PageShift.NEXT);
         player.sendMessage("Skip one page");
     }
 

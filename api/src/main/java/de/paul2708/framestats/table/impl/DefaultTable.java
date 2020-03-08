@@ -2,13 +2,13 @@ package de.paul2708.framestats.table.impl;
 
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableRegistration;
-import de.paul2708.framestats.internal.TableView;
 import de.paul2708.framestats.internal.frame.FramePlacer;
 import de.paul2708.framestats.internal.interaction.BackPageInteraction;
 import de.paul2708.framestats.internal.interaction.SearchInteraction;
 import de.paul2708.framestats.internal.interaction.SkipPageInteraction;
 import de.paul2708.framestats.internal.interaction.TableInteraction;
 import de.paul2708.framestats.internal.renderer.TableRenderer;
+import de.paul2708.framestats.internal.state.TableState;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
@@ -19,14 +19,10 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * This class is the default implementation of {@link Table}.
@@ -40,23 +36,18 @@ public final class DefaultTable implements Table {
     private TableSearcher searcher;
     private List<TableRow> tableContent;
 
-    private final Set<TableView> views;
-    // TODO: Add own object with searched name
-    private final Map<Player, List<TableRow>> playerRows;
-    private final Map<Player, Integer> playerPages;
+    private final Map<Player, TableState> states;
     private final List<TableInteraction> interactions;
 
     /**
      * Create a new default table.
      *
-     * @param configuration configuration
+     * @param configuration table configuration
      */
     public DefaultTable(TableConfiguration configuration) {
         this.configuration = configuration;
 
-        this.views = new HashSet<>();
-        this.playerRows = new HashMap<>();
-        this.playerPages = new HashMap<>();
+        this.states = new HashMap<>();
         this.interactions = new LinkedList<>();
 
         // Load interactions
@@ -66,9 +57,7 @@ public final class DefaultTable implements Table {
     }
 
     /**
-     * Set the search routine.
-     *
-     * @param searcher searcher
+     * {@inheritDoc}
      */
     @Override
     public void setSearcher(TableSearcher searcher) {
@@ -76,71 +65,48 @@ public final class DefaultTable implements Table {
     }
 
     /**
-     * Search for a name.
-     *
-     * @param name name to search for
+     * {@inheritDoc}
      */
-    @Override
-    public void search(Player player, String name) {
-        this.playerRows.put(player, searcher.search(player, name));
-
-        for (TableView view : views) {
-            view.drawSearch(name);
-        }
-    }
-
     @Override
     public void fill(List<TableRow> rows) {
         this.tableContent = new ArrayList<>(rows);
     }
 
-    @Override
-    public void changePage(Player player, int delta) {
-        int page = playerPages.getOrDefault(player, 1);
-
-        if (page + delta < 1) {
-            return;
-        }
-
-        playerPages.put(player, page + delta);
-
-        int skipEntries = (playerPages.get(player) - 1) * (configuration.getRows() - 1);
-        playerRows.put(player, playerRows.getOrDefault(player, tableContent).stream().skip(skipEntries).collect(Collectors.toList()));
-
-        for (TableView view : views) {
-            view.drawContent();
-        }
-    }
-
     /**
-     * Get an unmodifiable list of the current displayed rows.
-     *
-     * @return unmodifiable list of rows
+     * {@inheritDoc}
      */
     @Override
-    public List<TableRow> getRows(Player player) {
-        // TODO: Implement me
-        return playerRows.getOrDefault(player, tableContent);
+    public void search(Player player, String term) {
+        getState(player).setContent(searcher.search(player, term));
+        getState(player).setSearchTerm(term);
     }
 
     /**
-     * Internal method.
-     * Map a table view to this table.
-     *
-     * @param view table view
+     * {@inheritDoc}
      */
     @Override
-    public void addView(TableView view) {
-        views.add(view);
+    public TableState getState(Player player) {
+        if (!states.containsKey(player)) {
+            states.put(player, TableState.create(this));
+        }
+
+        return states.get(player);
     }
 
     /**
-     * Register the table.
-     * The item frames will be searched.
-     * Several internal listener will be registered (only once!).
+     * {@inheritDoc}
+     */
+    @Override
+    public List<TableRow> getContent() {
+        return tableContent;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void register() {
+        // TODO: Throw illegal state if not set
         FramePlacer placer = new FramePlacer();
         Block[][] wall = placer.construct(configuration.getLeftLowerCorner(), configuration.getRightUpperCorner());
         ItemFrame[][] frames = placer.search(wall);
@@ -167,22 +133,18 @@ public final class DefaultTable implements Table {
     }
 
     /**
-     * Get the table configuration.
-     *
-     * @return configuration
-     */
-    @Override
-    public TableConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    /**
-     * Get an unmodifiable list of all (implicit registered) interactions.
-     *
-     * @return unmodifiable list of interactions
+     * {@inheritDoc}
      */
     @Override
     public List<TableInteraction> getInteractions() {
         return interactions;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TableConfiguration getConfiguration() {
+        return configuration;
     }
 }
