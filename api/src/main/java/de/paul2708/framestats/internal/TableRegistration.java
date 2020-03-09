@@ -7,10 +7,8 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * This singleton holds all registered tables and its states per player.
@@ -25,15 +23,15 @@ public final class TableRegistration {
     private static TableRegistration instance;
 
     private final Map<Table, TableRenderer[][]> tables;
-    private final Set<Player> players;
 
     /**
      * Create a new table registration with an empty map of registered tables.
      */
     private TableRegistration() {
         this.tables = new HashMap<>();
-        this.players = new HashSet<>();
     }
+
+    // TODO: Remove table view on player leave or re-use old view
 
     /**
      * Create an internal table state for each table and add an view for them.
@@ -41,10 +39,6 @@ public final class TableRegistration {
      * @param player player to register
      */
     public void registerPlayer(Player player) {
-        if (players.contains(player)) {
-            return;
-        }
-
         tables.forEach((table, maps) -> {
             TableState state = table.getState(player);
             TableView view = new TableView(player, state, maps);
@@ -52,7 +46,6 @@ public final class TableRegistration {
             state.addView(view);
             view.update();
         });
-        players.add(player);
     }
 
     /**
