@@ -25,6 +25,7 @@ public final class TableState {
     private final int rows;
 
     // State properties
+    private List<TableRow> defaultContent;
     private List<TableRow> content;
     private int page;
     private String searchTerm;
@@ -41,6 +42,7 @@ public final class TableState {
         this.table = table;
         this.rows = table.getConfiguration().getRows() - 1;
 
+        this.defaultContent = new ArrayList<>(table.getContent());
         this.content = new ArrayList<>(table.getContent());
         this.page = 1;
         // TODO: Replace all "Suche.."
@@ -55,6 +57,7 @@ public final class TableState {
      * @param changedContent changed table rows
      */
     public void setContent(List<TableRow> changedContent) {
+        this.defaultContent = Collections.unmodifiableList(changedContent);
         this.content = Collections.unmodifiableList(changedContent);
     }
 
@@ -71,10 +74,9 @@ public final class TableState {
             return;
         }
         // TODO: Check upper page bound
-        // TODO: Fix back page?
 
         this.page += delta;
-        this.content = content.stream().skip((page - 1) * rows).collect(Collectors.toList());
+        this.content = defaultContent.stream().skip((page - 1) * rows).collect(Collectors.toList());
 
         for (TableView view : views) {
             view.update();
