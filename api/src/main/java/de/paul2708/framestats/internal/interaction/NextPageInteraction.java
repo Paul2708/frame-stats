@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.awt.Shape;
 
-public final class SkipPageInteraction implements TableInteraction {
+public final class NextPageInteraction implements TableInteraction {
 
     private final PageBar pageBar;
 
@@ -18,7 +18,7 @@ public final class SkipPageInteraction implements TableInteraction {
      *
      * @param configuration table configuration
      */
-    public SkipPageInteraction(TableConfiguration configuration) {
+    public NextPageInteraction(TableConfiguration configuration) {
         PageBarCalculator calculator = new PageBarCalculator(configuration);
         calculator.calculate();
 

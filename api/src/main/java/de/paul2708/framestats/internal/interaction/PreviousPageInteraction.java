@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.awt.Shape;
 
-public final class BackPageInteraction implements TableInteraction {
+public final class PreviousPageInteraction implements TableInteraction {
 
     private final PageBar pageBar;
 
@@ -20,7 +20,7 @@ public final class BackPageInteraction implements TableInteraction {
      *
      * @param configuration table configuration
      */
-    public BackPageInteraction(TableConfiguration configuration) {
+    public PreviousPageInteraction(TableConfiguration configuration) {
         PageBarCalculator calculator = new PageBarCalculator(configuration);
         calculator.calculate();
 

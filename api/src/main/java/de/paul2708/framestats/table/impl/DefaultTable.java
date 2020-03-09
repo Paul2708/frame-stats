@@ -3,9 +3,9 @@ package de.paul2708.framestats.table.impl;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.TableRegistration;
 import de.paul2708.framestats.internal.frame.FramePlacer;
-import de.paul2708.framestats.internal.interaction.BackPageInteraction;
+import de.paul2708.framestats.internal.interaction.PreviousPageInteraction;
 import de.paul2708.framestats.internal.interaction.SearchInteraction;
-import de.paul2708.framestats.internal.interaction.SkipPageInteraction;
+import de.paul2708.framestats.internal.interaction.NextPageInteraction;
 import de.paul2708.framestats.internal.interaction.TableInteraction;
 import de.paul2708.framestats.internal.renderer.TableRenderer;
 import de.paul2708.framestats.internal.state.TableState;
@@ -52,8 +52,8 @@ public final class DefaultTable implements Table {
 
         // Load interactions
         interactions.add(new SearchInteraction(configuration));
-        interactions.add(new BackPageInteraction(configuration));
-        interactions.add(new SkipPageInteraction(configuration));
+        interactions.add(new PreviousPageInteraction(configuration));
+        interactions.add(new NextPageInteraction(configuration));
     }
 
     /**

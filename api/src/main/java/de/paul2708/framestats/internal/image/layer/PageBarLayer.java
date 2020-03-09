@@ -11,13 +11,13 @@ import java.awt.image.BufferedImage;
  *
  * @author Paul2708
  */
-public class SearchBarLayer implements ImageLayer {
+public class PageBarLayer implements ImageLayer {
 
     private static final Color BUTTON_COLOR = Color.GRAY;
 
     private final PageBar pageBar;
 
-    public SearchBarLayer(PageBar pageBar) {
+    public PageBarLayer(PageBar pageBar) {
         this.pageBar = pageBar;
     }
 
@@ -34,7 +34,7 @@ public class SearchBarLayer implements ImageLayer {
         BufferedImage tableImage = clone(image);
         Graphics2D graphics = tableImage.createGraphics();
 
-        graphics.setColor(SearchBarLayer.BUTTON_COLOR);
+        graphics.setColor(PageBarLayer.BUTTON_COLOR);
 
         graphics.fill(pageBar.getBack());
         graphics.fill(pageBar.getInfo());

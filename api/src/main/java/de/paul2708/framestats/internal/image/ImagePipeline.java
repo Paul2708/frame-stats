@@ -10,7 +10,7 @@ import de.paul2708.framestats.internal.image.layer.ContentLayer;
 import de.paul2708.framestats.internal.image.layer.CroppingLayer;
 import de.paul2708.framestats.internal.image.layer.HeadingLayer;
 import de.paul2708.framestats.internal.image.layer.ImageLayer;
-import de.paul2708.framestats.internal.image.layer.SearchBarLayer;
+import de.paul2708.framestats.internal.image.layer.PageBarLayer;
 import de.paul2708.framestats.internal.image.layer.SearchButtonLayer;
 import de.paul2708.framestats.internal.image.layer.SearchNameLayer;
 import de.paul2708.framestats.internal.image.layer.TableLayer;
@@ -132,7 +132,7 @@ public final class ImagePipeline {
     }
 
     public ImagePipeline applyPageBar() {
-        this.currentImage = new SearchBarLayer(pageBarCalculator.result()).apply(currentImage);
+        this.currentImage = new PageBarLayer(pageBarCalculator.result()).apply(currentImage);
         return this;
     }
 

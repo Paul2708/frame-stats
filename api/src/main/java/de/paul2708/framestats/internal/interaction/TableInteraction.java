@@ -14,6 +14,7 @@ import java.awt.Shape;
 public interface TableInteraction {
 
     // TODO: Replace table with table state parameter
+    // TODO: Add rate limits
 
     /**
      * Run the interaction, if the player clicks on the {@link #position()}.
