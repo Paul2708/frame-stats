@@ -55,7 +55,7 @@ public final class ImagePipeline {
     public ImagePipeline runFully() {
         this.currentImage = this.baseImage()
                 .applyTableContent()
-                .applySearch("Suche..")
+                .applySearch()
                 .applyPageBar()
                 .get();
 
@@ -120,11 +120,10 @@ public final class ImagePipeline {
     /**
      * Create the search button with objective.
      *
-     * @param name name to search for
      * @return image pipeline
      */
-    public ImagePipeline applySearch(String name) {
-        this.currentImage = new SearchNameLayer(searchButtonCalculator, name)
+    public ImagePipeline applySearch() {
+        this.currentImage = new SearchNameLayer(searchButtonCalculator, tableState.getSearchTerm())
                 .apply(new SearchButtonLayer(searchButtonCalculator)
                         .apply(currentImage));
 
@@ -132,7 +131,7 @@ public final class ImagePipeline {
     }
 
     public ImagePipeline applyPageBar() {
-        this.currentImage = new PageBarLayer(pageBarCalculator.result()).apply(currentImage);
+        this.currentImage = new PageBarLayer(pageBarCalculator.result(), tableState.getPage()).apply(currentImage);
         return this;
     }
 

@@ -16,9 +16,11 @@ public class PageBarLayer implements ImageLayer {
     private static final Color BUTTON_COLOR = Color.GRAY;
 
     private final PageBar pageBar;
+    private final int page;
 
-    public PageBarLayer(PageBar pageBar) {
+    public PageBarLayer(PageBar pageBar, int page) {
         this.pageBar = pageBar;
+        this.page = page;
     }
 
     /**
@@ -41,6 +43,7 @@ public class PageBarLayer implements ImageLayer {
         graphics.fill(pageBar.getSkip());
 
         drawText("-1", Color.WHITE, graphics, pageBar.getBack());
+        drawText(page + " / ?", Color.WHITE, graphics, pageBar.getInfo());
         drawText("+1", Color.WHITE, graphics, pageBar.getSkip());
 
         return tableImage;

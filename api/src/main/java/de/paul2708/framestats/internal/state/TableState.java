@@ -88,6 +88,7 @@ public final class TableState {
      */
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
+        this.page = 1;
 
         for (TableView view : views) {
             view.update();
