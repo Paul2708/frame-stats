@@ -36,32 +36,13 @@ public final class TableView {
         this.pipeline = new ImagePipeline(state.getTable(), state);
     }
 
+    // TODO: Add extra methods to update only specific layers instead of all
+
     /**
      * Redraw the whole table.
      */
-    public void redraw() {
+    public void update() {
         pipeline.runFully();
-        draw();
-    }
-
-    /**
-     * Draw the search objective and results.
-     */
-    public void drawSearch() {
-        pipeline.baseImage()
-                .applyTableContent()
-                .applyPageBar()
-                .applySearch(state.getSearchTerm());
-        draw();
-    }
-
-    /**
-     * Draw the current table content (depending on the player).
-     */
-    public void drawContent() {
-        pipeline.baseImage()
-                .applyTableContent()
-                .applyPageBar();
         draw();
     }
 

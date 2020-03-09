@@ -50,7 +50,7 @@ public final class TableRegistration {
             TableView view = new TableView(player, state, maps);
 
             state.addView(view);
-            view.redraw();
+            view.update();
         });
         players.add(player);
     }

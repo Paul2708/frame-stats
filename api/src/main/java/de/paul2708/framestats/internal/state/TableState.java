@@ -77,7 +77,7 @@ public final class TableState {
         this.content = content.stream().skip((page - 1) * rows).collect(Collectors.toList());
 
         for (TableView view : views) {
-            view.drawContent();
+            view.update();
         }
     }
 
@@ -90,7 +90,7 @@ public final class TableState {
         this.searchTerm = searchTerm;
 
         for (TableView view : views) {
-            view.drawSearch();
+            view.update();
         }
     }
 
@@ -120,6 +120,15 @@ public final class TableState {
      */
     public List<TableRow> getContent() {
         return content;
+    }
+
+    /**
+     * Get the users current page.
+     *
+     * @return page number
+     */
+    public int getPage() {
+        return page;
     }
 
     /**

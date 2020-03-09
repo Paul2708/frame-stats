@@ -78,21 +78,6 @@ public class FrameStatsPlugin extends JavaPlugin {
                 .collect(Collectors.toList()));
 
         table.register();
-
-        getCommand("test").setExecutor(new CommandExecutor() {
-            @Override
-            public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-                if (args[0].equals("skip")) {
-                    table.changePage((Player) sender, 1);
-                    sender.sendMessage("Page + 1");
-                } else {
-                    table.changePage((Player) sender, -1);
-                    sender.sendMessage("Page - 1");
-                }
-
-                return true;
-            }
-        });
     }
 
     /**
