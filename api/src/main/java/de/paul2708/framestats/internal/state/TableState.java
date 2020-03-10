@@ -69,11 +69,10 @@ public final class TableState {
     public void changePage(PageShift pageShift) {
         int delta = pageShift.getDelta();
 
-        // Lower page bound
-        if (page + delta < 1) {
+        // Check page bound
+        if (page + delta < 1 || (page + delta > getTotalPages())) {
             return;
         }
-        // TODO: Check upper page bound
 
         this.page += delta;
         this.content = defaultContent.stream().skip((page - 1) * rows).collect(Collectors.toList());
