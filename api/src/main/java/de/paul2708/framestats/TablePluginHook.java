@@ -1,5 +1,6 @@
 package de.paul2708.framestats;
 
+import de.paul2708.framestats.internal.listener.EntityDamageByEntityListener;
 import de.paul2708.framestats.internal.listener.HangingBreakListener;
 import de.paul2708.framestats.internal.listener.MapClickListener;
 import de.paul2708.framestats.internal.listener.PlayerInteractAtEntityListener;
@@ -41,7 +42,8 @@ public final class TablePluginHook {
                 new PlayerInteractEntityListener(),
                 new PlayerInteractAtEntityListener(),
                 new MapClickListener(),
-                new HangingBreakListener());
+                new HangingBreakListener(),
+                new EntityDamageByEntityListener());
     }
 
     public static JavaPlugin getPlugin() {

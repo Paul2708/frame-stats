@@ -12,8 +12,6 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  */
 public final class HangingBreakListener implements Listener {
 
-    // TODO: Still possible to kick out the item frame item
-
     /**
      * Disable item frame breaking.
      *
