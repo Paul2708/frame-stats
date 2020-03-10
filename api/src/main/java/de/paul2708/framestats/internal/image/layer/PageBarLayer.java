@@ -17,10 +17,12 @@ public class PageBarLayer implements ImageLayer {
 
     private final PageBar pageBar;
     private final int page;
+    private final int totalPages;
 
-    public PageBarLayer(PageBar pageBar, int page) {
+    public PageBarLayer(PageBar pageBar, int page, int totalPages) {
         this.pageBar = pageBar;
         this.page = page;
+        this.totalPages = totalPages;
     }
 
     /**
@@ -43,7 +45,7 @@ public class PageBarLayer implements ImageLayer {
         graphics.fill(pageBar.getSkip());
 
         drawText("-1", Color.WHITE, graphics, pageBar.getBack());
-        drawText(page + " / ?", Color.WHITE, graphics, pageBar.getInfo());
+        drawText(page + " / " + totalPages, Color.WHITE, graphics, pageBar.getInfo());
         drawText("+1", Color.WHITE, graphics, pageBar.getSkip());
 
         return tableImage;

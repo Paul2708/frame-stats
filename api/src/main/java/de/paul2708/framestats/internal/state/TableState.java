@@ -135,6 +135,16 @@ public final class TableState {
     }
 
     /**
+     * Calculate the total pages.
+     *
+     * @return total pages
+     */
+    public int getTotalPages() {
+        int nextDiff = rows - (defaultContent.size() % rows);
+        return (defaultContent.size() + nextDiff) / rows;
+    }
+
+    /**
      * Get the searching term.
      *
      * @return searching term

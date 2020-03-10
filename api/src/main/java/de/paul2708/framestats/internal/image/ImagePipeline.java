@@ -131,7 +131,8 @@ public final class ImagePipeline {
     }
 
     public ImagePipeline applyPageBar() {
-        this.currentImage = new PageBarLayer(pageBarCalculator.result(), tableState.getPage()).apply(currentImage);
+        this.currentImage = new PageBarLayer(pageBarCalculator.result(), tableState.getPage(), tableState.getTotalPages())
+                .apply(currentImage);
         return this;
     }
 
