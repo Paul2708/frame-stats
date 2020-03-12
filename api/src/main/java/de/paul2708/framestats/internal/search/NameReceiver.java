@@ -12,8 +12,6 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface NameReceiver {
 
-    // TODO: Add sign or chat receiver
-
     /**
      * Receive the searched user by the user.
      * The consumer accepts the searched string.

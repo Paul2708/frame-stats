@@ -13,8 +13,6 @@ public final class PreviousPageInteraction implements TableInteraction {
 
     private final PageBar pageBar;
 
-    // TODO: Rename classes
-
     /**
      * Create a new search interaction and calculate the needed position.
      *

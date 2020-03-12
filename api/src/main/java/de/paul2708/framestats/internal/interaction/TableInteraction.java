@@ -13,7 +13,6 @@ import java.awt.Shape;
  */
 public interface TableInteraction {
 
-    // TODO: Replace table with table state parameter
     // TODO: Add rate limits
 
     /**
