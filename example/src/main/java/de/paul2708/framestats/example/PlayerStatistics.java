@@ -5,14 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Class description.
- *
- * @author Paul2708
- */
 public final class PlayerStatistics implements Comparable<PlayerStatistics> {
-
-    // TODO: Add javadoc
 
     private static final String[] NAMES = { "Paul", "Tom", "Lina", "Leon", "NameWith16Letter" };
 

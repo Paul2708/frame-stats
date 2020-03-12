@@ -45,7 +45,6 @@ public final class TableState {
         this.defaultContent = new ArrayList<>(table.getContent());
         this.content = new ArrayList<>(table.getContent());
         this.page = 1;
-        // TODO: Replace all "Suche.."
         this.searchTerm = "Suche..";
 
         this.views = new HashSet<>();
