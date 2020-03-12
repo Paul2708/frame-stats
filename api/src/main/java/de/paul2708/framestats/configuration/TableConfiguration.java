@@ -125,15 +125,13 @@ public final class TableConfiguration {
         return 1 + Math.abs(getLeftLowerCorner().getBlockY() - getRightUpperCorner().getBlockY());
     }
 
-    // TODO: Use constant for path
-
     /**
      * Get the relative (to plugins/Frame-Stats/) background image path.
      *
      * @return relative path
      */
     public String getBackgroundPath() {
-        return "plugins/Frame-Stats/" + configuration.getString("background-image");
+        return TableConfiguration.PATH + configuration.getString("background-image");
     }
 
     /**
