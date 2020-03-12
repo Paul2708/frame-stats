@@ -10,7 +10,7 @@ public enum AnvilSlot {
 
     private final int slot;
 
-    private AnvilSlot(int slot) {
+    AnvilSlot(int slot) {
         this.slot = slot;
     }
 

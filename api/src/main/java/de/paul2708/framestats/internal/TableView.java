@@ -16,7 +16,6 @@ import java.awt.Image;
 public final class TableView {
 
     private final Player player;
-    private final TableState state;
     private final TableRenderer[][] renderer;
 
     private final ImagePipeline pipeline;
@@ -30,7 +29,6 @@ public final class TableView {
      */
     public TableView(Player player, TableState state, TableRenderer[][] view) {
         this.renderer = view;
-        this.state = state;
         this.player = player;
 
         this.pipeline = new ImagePipeline(state.getTable(), state);

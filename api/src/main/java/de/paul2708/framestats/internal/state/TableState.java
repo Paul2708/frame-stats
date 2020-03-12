@@ -31,7 +31,7 @@ public final class TableState {
     private String searchTerm;
 
     // Subscribed table views
-    private Set<TableView> views;
+    private final Set<TableView> views;
 
     /**
      * Create a new table state and initialize the state with default values.
