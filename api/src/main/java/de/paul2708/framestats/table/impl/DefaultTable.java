@@ -106,7 +106,13 @@ public final class DefaultTable implements Table {
      */
     @Override
     public void register() {
-        // TODO: Throw illegal state if not set
+        if (searcher == null) {
+            throw new IllegalStateException("Searcher must be set before registering the table.");
+        }
+        if (tableContent == null) {
+            throw new IllegalStateException("Table must be filled before registering it.");
+        }
+
         FramePlacer placer = new FramePlacer();
         Block[][] wall = placer.construct(configuration.getLeftLowerCorner(), configuration.getRightUpperCorner());
         ItemFrame[][] frames = placer.search(wall);
