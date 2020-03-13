@@ -31,6 +31,7 @@ public final class TableConfiguration {
     static {
         ConfigurationSerialization.registerClass(ColumnConfiguration.class);
         ConfigurationSerialization.registerClass(SearchButtonConfiguration.class);
+        ConfigurationSerialization.registerClass(PageBarConfiguration.class);
     }
 
     /**
@@ -98,6 +99,15 @@ public final class TableConfiguration {
      */
     public SearchButtonConfiguration getSearchButtonConfiguration() {
         return (SearchButtonConfiguration) configuration.get("search-button");
+    }
+
+    /**
+     * Get the page bar configuration.
+     *
+     * @return page bar configuration
+     */
+    public PageBarConfiguration getPageBarConfiguration() {
+        return (PageBarConfiguration) configuration.get("page-bar");
     }
 
     /**
@@ -172,6 +182,7 @@ public final class TableConfiguration {
         }
 
         configuration.getSearchButtonConfiguration().verify();
+        configuration.getPageBarConfiguration().verify();
 
         return configuration;
     }
