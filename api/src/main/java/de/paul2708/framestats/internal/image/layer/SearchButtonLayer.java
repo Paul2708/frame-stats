@@ -1,9 +1,8 @@
 package de.paul2708.framestats.internal.image.layer;
 
-import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /**
@@ -15,10 +14,10 @@ public class SearchButtonLayer implements ImageLayer {
 
     private static final Color BUTTON_COLOR = Color.GRAY;
 
-    private final SearchButtonCalculator calculator;
+    private final Rectangle button;
 
-    public SearchButtonLayer(SearchButtonCalculator calculator) {
-        this.calculator = calculator;
+    public SearchButtonLayer(Rectangle button) {
+        this.button = button;
     }
 
     /**
@@ -36,9 +35,9 @@ public class SearchButtonLayer implements ImageLayer {
 
         graphics.setColor(SearchButtonLayer.BUTTON_COLOR);
 
-        graphics.fill(calculator.result());
+        graphics.fill(button);
         graphics.setColor(Color.WHITE);
-        graphics.draw(calculator.result());
+        graphics.draw(button);
 
         return tableImage;
     }

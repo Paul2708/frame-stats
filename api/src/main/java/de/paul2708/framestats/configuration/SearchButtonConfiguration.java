@@ -17,8 +17,8 @@ public final class SearchButtonConfiguration implements ConfigurationSerializabl
 
     // TODO: Add general verify method
 
-    private final int xPadding;
-    private final int yPadding;
+    private final int x;
+    private final int y;
 
     private final int width;
     private final int height;
@@ -30,8 +30,8 @@ public final class SearchButtonConfiguration implements ConfigurationSerializabl
      * @param serializedMap map with column attributes
      */
     public SearchButtonConfiguration(Map<String, Object> serializedMap) {
-        this.xPadding = (int) serializedMap.get("x");
-        this.yPadding = (int) serializedMap.get("y");
+        this.x = (int) serializedMap.get("x");
+        this.y = (int) serializedMap.get("y");
         this.width = (int) serializedMap.get("width");
         this.height = (int) serializedMap.get("height");
     }
@@ -51,21 +51,21 @@ public final class SearchButtonConfiguration implements ConfigurationSerializabl
     }
 
     /**
-     * Get the x padding relative the right side.
+     * Get the x coordinate.
      *
-     * @return x padding relative to right side
+     * @return x coordinate
      */
-    public int getXPadding() {
-        return xPadding;
+    public int getX() {
+        return x;
     }
 
     /**
      * Get the y padding relative the upper side.
      *
-     * @return y padding relative to upper side
+     * @return y coordinate
      */
-    public int getYPadding() {
-        return yPadding;
+    public int getY() {
+        return y;
     }
 
     /**
@@ -98,8 +98,8 @@ public final class SearchButtonConfiguration implements ConfigurationSerializabl
     public Map<String, Object> serialize() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("x", xPadding);
-        map.put("y", yPadding);
+        map.put("x", x);
+        map.put("y", y);
         map.put("width", width);
         map.put("height", height);
 

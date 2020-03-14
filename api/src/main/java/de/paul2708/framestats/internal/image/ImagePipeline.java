@@ -1,10 +1,10 @@
 package de.paul2708.framestats.internal.image;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
+import de.paul2708.framestats.configuration.SearchButtonConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.image.calculator.PageBarCalculator;
 import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
-import de.paul2708.framestats.internal.image.calculator.SearchButtonCalculator;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
 import de.paul2708.framestats.internal.image.layer.ContentLayer;
 import de.paul2708.framestats.internal.image.layer.CroppingLayer;
@@ -18,6 +18,7 @@ import de.paul2708.framestats.internal.state.TableState;
 import de.paul2708.framestats.table.Table;
 
 import javax.imageio.ImageIO;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,8 +37,9 @@ public final class ImagePipeline {
     private final TableState tableState;
 
     private PositionCalculator positionCalculator;
-    private SearchButtonCalculator searchButtonCalculator;
     private PageBarCalculator pageBarCalculator;
+
+    private Rectangle searchButton;
 
     private BufferedImage baseImage;
     private BufferedImage currentImage;
@@ -72,12 +74,12 @@ public final class ImagePipeline {
             // Prepare used layer references and calculate positions
             TableConfiguration configuration = table.getConfiguration();
 
+            this.searchButton = configuration.getSearchButton();
+
             this.positionCalculator = new PositionCalculator(configuration);
-            this.searchButtonCalculator = new SearchButtonCalculator(configuration);
             this.pageBarCalculator = new PageBarCalculator(configuration);
 
             positionCalculator.calculate();
-            searchButtonCalculator.calculate();
             pageBarCalculator.calculate();
 
             // Load image
@@ -98,7 +100,7 @@ public final class ImagePipeline {
                     .map(ColumnConfiguration::getName)
                     .collect(Collectors.toList()))
             );
-            layers.add(new SearchButtonLayer(searchButtonCalculator));
+            layers.add(new SearchButtonLayer(searchButton));
             this.baseImage = run(image, layers);
         }
 
@@ -123,8 +125,8 @@ public final class ImagePipeline {
      * @return image pipeline
      */
     public ImagePipeline applySearch() {
-        this.currentImage = new SearchNameLayer(searchButtonCalculator, tableState.getSearchTerm())
-                .apply(new SearchButtonLayer(searchButtonCalculator)
+        this.currentImage = new SearchNameLayer(searchButton, tableState.getSearchTerm())
+                .apply(new SearchButtonLayer(searchButton)
                         .apply(currentImage));
 
         return this;

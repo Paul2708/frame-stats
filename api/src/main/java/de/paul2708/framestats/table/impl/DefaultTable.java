@@ -51,7 +51,7 @@ public final class DefaultTable implements Table {
         this.interactions = new LinkedList<>();
 
         // Load interactions
-        interactions.add(new SearchInteraction(configuration));
+        interactions.add(new SearchInteraction(configuration.getSearchButton()));
         interactions.add(new PreviousPageInteraction(configuration));
         interactions.add(new NextPageInteraction(configuration));
     }

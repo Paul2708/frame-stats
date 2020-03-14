@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -93,12 +94,15 @@ public final class TableConfiguration {
     }
 
     /**
-     * Get the search button configuration.
+     * Get the search button.
      *
-     * @return search button configuration
+     * @see SearchButtonConfiguration
+     * @return search button
      */
-    public SearchButtonConfiguration getSearchButtonConfiguration() {
-        return (SearchButtonConfiguration) configuration.get("search-button");
+    public Rectangle getSearchButton() {
+        SearchButtonConfiguration buttonConfig = getSearchButtonConfiguration();
+
+        return new Rectangle(buttonConfig.getX(), buttonConfig.getY(), buttonConfig.getWidth(), buttonConfig.getHeight());
     }
 
     /**
@@ -142,6 +146,15 @@ public final class TableConfiguration {
      */
     public String getBackgroundPath() {
         return TableConfiguration.PATH + configuration.getString("background-image");
+    }
+
+    /**
+     * Get the search button configuration.
+     *
+     * @return search button configuration
+     */
+    private SearchButtonConfiguration getSearchButtonConfiguration() {
+        return (SearchButtonConfiguration) this.configuration.get("search-button");
     }
 
     /**
