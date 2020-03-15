@@ -52,8 +52,8 @@ public final class DefaultTable implements Table {
 
         // Load interactions
         interactions.add(new SearchInteraction(configuration.getSearchButton()));
-        interactions.add(new PreviousPageInteraction(configuration));
-        interactions.add(new NextPageInteraction(configuration));
+        interactions.add(new PreviousPageInteraction(configuration.getPageBar()));
+        interactions.add(new NextPageInteraction(configuration.getPageBar()));
     }
 
     /**

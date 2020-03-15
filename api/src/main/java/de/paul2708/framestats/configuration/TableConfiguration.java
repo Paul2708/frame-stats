@@ -1,6 +1,7 @@
 package de.paul2708.framestats.configuration;
 
 import de.paul2708.framestats.exception.InvalidConfigurationException;
+import de.paul2708.framestats.internal.image.calculator.PageBar;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -106,12 +107,24 @@ public final class TableConfiguration {
     }
 
     /**
-     * Get the page bar configuration.
+     * Get the configured page bar.
      *
-     * @return page bar configuration
+     * @return page bar
      */
-    public PageBarConfiguration getPageBarConfiguration() {
-        return (PageBarConfiguration) configuration.get("page-bar");
+    public PageBar getPageBar() {
+        PageBarConfiguration barConfiguration = getPageBarConfiguration();
+        int x = barConfiguration.getX();
+        int y = barConfiguration.getY();
+        int height = barConfiguration.getHeight();
+        int space = barConfiguration.getSpaceWidth();
+        int shift = barConfiguration.getShiftWidth();
+        int infoWidth = barConfiguration.getInfoWidth();
+
+        Rectangle previous = new Rectangle(x, y , shift, height);
+        Rectangle info = new Rectangle(x + shift + space, y , infoWidth, height);
+        Rectangle next = new Rectangle(x + shift + space + infoWidth + space, y , shift, height);
+
+        return new PageBar(previous, info, next);
     }
 
     /**
@@ -158,6 +171,15 @@ public final class TableConfiguration {
     }
 
     /**
+     * Get the page bar configuration.
+     *
+     * @return page bar configuration
+     */
+    private PageBarConfiguration getPageBarConfiguration() {
+        return (PageBarConfiguration) configuration.get("page-bar");
+    }
+
+    /**
      * Load a table configuration from file and verify its correctness.
      *
      * @see ColumnConfiguration#verify()
@@ -179,6 +201,7 @@ public final class TableConfiguration {
         Objects.requireNonNull(configuration.getColumnConfigurations(), "Columns list must be set");
         Objects.requireNonNull(configuration.getBackgroundPath(), "Background image path must be set");
         Objects.requireNonNull(configuration.getSearchButtonConfiguration(), "Search button must be set");
+        Objects.requireNonNull(configuration.getPageBarConfiguration(), "Page bar must be set");
 
         for (ColumnConfiguration columnConfiguration : configuration.getColumnConfigurations()) {
             columnConfiguration.verify();

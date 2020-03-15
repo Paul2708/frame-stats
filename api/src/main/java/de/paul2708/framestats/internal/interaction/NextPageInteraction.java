@@ -1,8 +1,6 @@
 package de.paul2708.framestats.internal.interaction;
 
-import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.image.calculator.PageBar;
-import de.paul2708.framestats.internal.image.calculator.PageBarCalculator;
 import de.paul2708.framestats.internal.state.PageShift;
 import de.paul2708.framestats.table.Table;
 import org.bukkit.entity.Player;
@@ -13,16 +11,8 @@ public final class NextPageInteraction implements TableInteraction {
 
     private final PageBar pageBar;
 
-    /**
-     * Create a new search interaction and calculate the needed position.
-     *
-     * @param configuration table configuration
-     */
-    public NextPageInteraction(TableConfiguration configuration) {
-        PageBarCalculator calculator = new PageBarCalculator(configuration);
-        calculator.calculate();
-
-        this.pageBar = calculator.result();
+    public NextPageInteraction(PageBar pageBar) {
+        this.pageBar = pageBar;
     }
 
     /**

@@ -17,8 +17,8 @@ public final class PageBarConfiguration implements ConfigurationSerializable {
 
     // TODO: Add general verify method
 
-    private final int xPadding;
-    private final int yPadding;
+    private final int x;
+    private final int y;
 
     private final int shiftWidth;
     private final int infoWidth;
@@ -33,8 +33,8 @@ public final class PageBarConfiguration implements ConfigurationSerializable {
      * @param serializedMap map with column attributes
      */
     public PageBarConfiguration(Map<String, Object> serializedMap) {
-        this.xPadding = (int) serializedMap.get("x");
-        this.yPadding = (int) serializedMap.get("y");
+        this.x = (int) serializedMap.get("x");
+        this.y = (int) serializedMap.get("y");
         this.shiftWidth = (int) serializedMap.get("shift-width");
         this.infoWidth = (int) serializedMap.get("info-width");
         this.spaceWidth = (int) serializedMap.get("space-width");
@@ -56,21 +56,21 @@ public final class PageBarConfiguration implements ConfigurationSerializable {
     }
 
     /**
-     * Get the x padding relative the left side.
+     * Get the x coordinate.
      *
-     * @return x padding relative to left side
+     * @return x coordinate
      */
-    public int getXPadding() {
-        return xPadding;
+    public int getX() {
+        return x;
     }
 
     /**
-     * Get the y padding relative the bottom side.
+     * Get the y coordinate.
      *
-     * @return y padding relative to bottom side
+     * @return y coordinate
      */
-    public int getYPadding() {
-        return yPadding;
+    public int getY() {
+        return y;
     }
 
     /**
@@ -121,8 +121,8 @@ public final class PageBarConfiguration implements ConfigurationSerializable {
     public Map<String, Object> serialize() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("x", xPadding);
-        map.put("y", yPadding);
+        map.put("x", x);
+        map.put("y", y);
         map.put("shift-width", shiftWidth);
         map.put("info-width", infoWidth);
         map.put("space-width", spaceWidth);

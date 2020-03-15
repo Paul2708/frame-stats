@@ -1,9 +1,8 @@
 package de.paul2708.framestats.internal.image;
 
 import de.paul2708.framestats.configuration.ColumnConfiguration;
-import de.paul2708.framestats.configuration.SearchButtonConfiguration;
 import de.paul2708.framestats.configuration.TableConfiguration;
-import de.paul2708.framestats.internal.image.calculator.PageBarCalculator;
+import de.paul2708.framestats.internal.image.calculator.PageBar;
 import de.paul2708.framestats.internal.image.calculator.PositionCalculator;
 import de.paul2708.framestats.internal.image.layer.BackgroundLayer;
 import de.paul2708.framestats.internal.image.layer.ContentLayer;
@@ -37,9 +36,9 @@ public final class ImagePipeline {
     private final TableState tableState;
 
     private PositionCalculator positionCalculator;
-    private PageBarCalculator pageBarCalculator;
 
     private Rectangle searchButton;
+    private PageBar pageBar;
 
     private BufferedImage baseImage;
     private BufferedImage currentImage;
@@ -75,12 +74,11 @@ public final class ImagePipeline {
             TableConfiguration configuration = table.getConfiguration();
 
             this.searchButton = configuration.getSearchButton();
+            this.pageBar = configuration.getPageBar();
 
             this.positionCalculator = new PositionCalculator(configuration);
-            this.pageBarCalculator = new PageBarCalculator(configuration);
 
             positionCalculator.calculate();
-            pageBarCalculator.calculate();
 
             // Load image
             BufferedImage image = null;
@@ -133,7 +131,7 @@ public final class ImagePipeline {
     }
 
     public ImagePipeline applyPageBar() {
-        this.currentImage = new PageBarLayer(pageBarCalculator.result(), tableState.getPage(), tableState.getTotalPages())
+        this.currentImage = new PageBarLayer(pageBar, tableState.getPage(), tableState.getTotalPages())
                 .apply(currentImage);
         return this;
     }
