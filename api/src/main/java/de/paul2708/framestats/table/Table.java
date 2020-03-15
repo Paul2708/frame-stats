@@ -3,10 +3,12 @@ package de.paul2708.framestats.table;
 import de.paul2708.framestats.configuration.TableConfiguration;
 import de.paul2708.framestats.internal.interaction.TableInteraction;
 import de.paul2708.framestats.internal.state.TableState;
+import de.paul2708.framestats.table.image.HeadRequestHandler;
 import de.paul2708.framestats.table.impl.DefaultTable;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * This interface represents the functional table.
@@ -28,6 +30,17 @@ public interface Table {
      * @param searcher table searcher
      */
     void setSearcher(TableSearcher searcher);
+
+    /**
+     * Set the head request handler.
+     * It will call {@link HeadRequestHandler#request(String, Consumer)} every time a row changes.
+     * <br>
+     * Has to be set before {@link #register()} the table.
+     *
+     * @see HeadRequestHandler#request(String, Consumer)
+     * @param handler head request handler
+     */
+    void setHeadRequestHandler(HeadRequestHandler handler);
 
     /**
      * Fill the table with content.

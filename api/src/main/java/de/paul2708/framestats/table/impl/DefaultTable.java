@@ -12,6 +12,7 @@ import de.paul2708.framestats.internal.state.TableState;
 import de.paul2708.framestats.table.Table;
 import de.paul2708.framestats.table.TableRow;
 import de.paul2708.framestats.table.TableSearcher;
+import de.paul2708.framestats.table.image.HeadRequestHandler;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -34,6 +35,7 @@ public final class DefaultTable implements Table {
     private final TableConfiguration configuration;
 
     private TableSearcher searcher;
+    private HeadRequestHandler headRequestHandler;
     private List<TableRow> tableContent;
 
     private final Map<Player, TableState> states;
@@ -62,6 +64,14 @@ public final class DefaultTable implements Table {
     @Override
     public void setSearcher(TableSearcher searcher) {
         this.searcher = searcher;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setHeadRequestHandler(HeadRequestHandler handler) {
+        this.headRequestHandler = handler;
     }
 
     /**
@@ -108,6 +118,9 @@ public final class DefaultTable implements Table {
     public void register() {
         if (searcher == null) {
             throw new IllegalStateException("Searcher must be set before registering the table.");
+        }
+        if (headRequestHandler == null) {
+            throw new IllegalStateException("Head request handler must be set before registering the table.");
         }
         if (tableContent == null) {
             throw new IllegalStateException("Table must be filled before registering it.");
