@@ -36,6 +36,6 @@ public final class PreviousPageInteraction implements TableInteraction {
      */
     @Override
     public Shape position() {
-        return pageBar.getBack();
+        return pageBar.getPrevious();
     }
 }

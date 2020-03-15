@@ -19,7 +19,7 @@ public class PageBar {
         this.skip = skip;
     }
 
-    public Rectangle getBack() {
+    public Rectangle getPrevious() {
         return back;
     }
 
@@ -27,7 +27,7 @@ public class PageBar {
         return info;
     }
 
-    public Rectangle getSkip() {
+    public Rectangle getNext() {
         return skip;
     }
 }

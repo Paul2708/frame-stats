@@ -40,13 +40,13 @@ public class PageBarLayer implements ImageLayer {
 
         graphics.setColor(PageBarLayer.BUTTON_COLOR);
 
-        graphics.fill(pageBar.getBack());
+        graphics.fill(pageBar.getPrevious());
         graphics.fill(pageBar.getInfo());
-        graphics.fill(pageBar.getSkip());
+        graphics.fill(pageBar.getNext());
 
-        drawText("-1", Color.WHITE, graphics, pageBar.getBack());
+        drawText("-1", Color.WHITE, graphics, pageBar.getPrevious());
         drawText(page + " / " + totalPages, Color.WHITE, graphics, pageBar.getInfo());
-        drawText("+1", Color.WHITE, graphics, pageBar.getSkip());
+        drawText("+1", Color.WHITE, graphics, pageBar.getNext());
 
         return tableImage;
     }

@@ -35,6 +35,6 @@ public final class NextPageInteraction implements TableInteraction {
      */
     @Override
     public Shape position() {
-        return pageBar.getSkip();
+        return pageBar.getNext();
     }
 }
