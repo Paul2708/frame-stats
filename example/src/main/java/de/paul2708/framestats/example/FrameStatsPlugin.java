@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -67,7 +68,7 @@ public class FrameStatsPlugin extends JavaPlugin {
                                 stats.getDeaths(), stats.getPoints()))
                         .collect(Collectors.toList())
         );
-
+        table.setHeadRequestHandler((playerName, headConsumer) -> headConsumer.accept(Optional.empty()));
         table.fill(database.stream()
                 .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
                         stats.getDeaths(), stats.getPoints()))
