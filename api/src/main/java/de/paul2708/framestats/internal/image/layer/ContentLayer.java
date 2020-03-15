@@ -57,7 +57,7 @@ public class ContentLayer implements ImageLayer {
             TableRow row = rows.get(i);
 
             for (int j = 0; j < row.getEntries().length; j++) {
-                String cell = row.getEntries()[j];
+                String cell = row.getEntries()[j].toString();
 
                 // [i + 1] as [0] is the heading row
                 drawText(cell, FONT_COLOR, graphics, rectangles[i + 1][j]);

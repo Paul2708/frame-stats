@@ -12,31 +12,18 @@ import java.util.Objects;
  */
 public final class TableRow {
 
-    private final String[] entries;
+    private final Object[] entries;
 
     /**
      * Create a new immutable table row.
      * Note that the class will not check the amount of columns.
-     *
-     * @param entries row entries, be sure to use the correct amount of strings
-     */
-    public TableRow(String... entries) {
-        Objects.requireNonNull(entries);
-
-        this.entries = entries;
-    }
-
-    /**
-     * Create a new immutable table row.
-     * Note that the class will not check the amount of columns.
-     * Every object will call {@link #toString()}, so make sure that the method is implemented.
      *
      * @param entries row entries, be sure to use the correct amount of objects
      */
     public TableRow(Object... entries) {
         Objects.requireNonNull(entries);
 
-        this.entries = Arrays.stream(entries).map(Object::toString).toArray(String[]::new);
+        this.entries = entries;
     }
 
     /**
@@ -44,7 +31,7 @@ public final class TableRow {
      *
      * @return row entries
      */
-    public String[] getEntries() {
+    public Object[] getEntries() {
         return entries;
     }
 
