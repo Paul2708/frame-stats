@@ -63,12 +63,12 @@ public class FrameStatsPlugin extends JavaPlugin {
         table.setSearcher((player, name) ->
                 database.stream()
                         .filter(stats -> stats.getName().contains(name))
-                        .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                        .map(stats -> new TableRow(stats.getRank(), "", stats.getName(), stats.getKills(),
                                 stats.getDeaths(), stats.getPoints()))
                         .collect(Collectors.toList())
         );
         table.fill(database.stream()
-                .map(stats -> new TableRow(stats.getRank(), stats.getName(), stats.getKills(),
+                .map(stats -> new TableRow(stats.getRank(), "", stats.getName(), stats.getKills(),
                         stats.getDeaths(), stats.getPoints()))
                 .collect(Collectors.toList()));
 

@@ -5,6 +5,7 @@ import de.paul2708.framestats.table.TableRow;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -57,10 +58,14 @@ public class ContentLayer implements ImageLayer {
             TableRow row = rows.get(i);
 
             for (int j = 0; j < row.getEntries().length; j++) {
-                String cell = row.getEntries()[j].toString();
+                Object entry = row.getEntries()[j];
 
-                // [i + 1] as [0] is the heading row
-                drawText(cell, FONT_COLOR, graphics, rectangles[i + 1][j]);
+                if (entry instanceof Image) {
+                    // TODO: Draw image entry
+                } else if (entry instanceof String) {
+                    // [i + 1] as [0] is the heading row
+                    drawText(entry.toString(), FONT_COLOR, graphics, rectangles[i + 1][j]);
+                }
             }
         }
 
